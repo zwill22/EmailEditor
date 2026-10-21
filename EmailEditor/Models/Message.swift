@@ -35,8 +35,26 @@ extension Message {
         Message(
             title: "Example message",
             message: "Hello there!",
-            addresses: ["person@example.com"]
-        )
+            addresses: ["ob1@force.com"]
+        ),
+
+        Message(
+            title: "Reply",
+            message: "General Kenobi!",
+            addresses: ["grevious@force.com"]
+        ),
+
+        Message(
+            title: "I hate you",
+            message: "Master, I wanted to be the one to hunt him down!",
+            addresses: ["ani@force.com"]
+        ),
+
+        Message(
+            title: "Patience",
+            message: "Rush, this do not. Calm, you should be.",
+            addresses: ["green@force.com"]
+        ),
     ]
 
 }
