@@ -12,15 +12,26 @@ struct EditView: View {
     @State private var title = ""
     @State private var address = ""
     @State private var message = ""
+
     @State private var isShowingCancelConfirmation = false
-    
+
     @Environment(\.dismiss) private var dismiss
     @Environment(DataContainer.self) private var dataContainer
 
     var body: some View {
         NavigationStack {
             ScrollView {
-                contentStack
+                HStack(alignment: .top, spacing: 0) {
+                    editor
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                    RenderedMessageView(
+                        title: $title,
+                        address: $address,
+                        message: $message
+                    ).padding(.top, 16)
+
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                }
             }
             .scrollDismissesKeyboard(.interactively)
             .navigationTitle("Editor")
@@ -33,7 +44,10 @@ struct EditView: View {
                             isShowingCancelConfirmation = true
                         }
                     }
-                    .confirmationDialog("Discard message", isPresented: $isShowingCancelConfirmation) {
+                    .confirmationDialog(
+                        "Discard message",
+                        isPresented: $isShowingCancelConfirmation
+                    ) {
                         Button("Discard message", role: .destructive) {
                             dismiss()
                         }
@@ -65,13 +79,12 @@ struct EditView: View {
         }
     }
 
-    var contentStack: some View {
+    var editor: some View {
         VStack(alignment: .leading) {
             TextField(text: $title) {
                 Text("Title (Required)")
             }
             .font(.title.bold())
-            .padding(.top, 48)
 
             TextField(text: $address) {
                 Text("Recipient")
@@ -81,15 +94,15 @@ struct EditView: View {
 
             Divider()
 
-            TextField("Message", text: $message, axis: .vertical)
-                .multilineTextAlignment(.leading)
-                .lineLimit(10...Int.max)
+            TextEditor(text: $message)
+                .font(.title3)
+                .frame(minHeight: 192)
+
         }
         .padding()
     }
 }
 
 #Preview {
-    EditView()
-        .sampleDataContainer()
+    EditView().sampleDataContainer()
 }

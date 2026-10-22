@@ -15,38 +15,46 @@ struct MessageView: View {
 
     var body: some View {
         NavigationStack {
-            ScrollView {
-                pathItems.frame(maxWidth: .infinity)
-            }
-            .overlay {
-                if messages.isEmpty {
-                    ContentUnavailableView {
-                        Label("No messages", systemImage: "exclamationmark.circle.fill")
-                    } description: {
-                        Text("Add a message to see list of saved messages")
+            pathItems.frame(maxWidth: .infinity)
+                .overlay {
+                    if messages.isEmpty {
+                        ContentUnavailableView {
+                            Label(
+                                "No messages",
+                                systemImage: "exclamationmark.circle.fill"
+                            )
+                        } description: {
+                            Text("Add a message to see list of saved messages")
+                        }
                     }
                 }
-            }
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    Button {
-                        showCreateMessage = true
-                    } label: {
-                        Image(systemName: "plus")
-                    }
-                    .sheet(isPresented: $showCreateMessage) {
-                        EditView()
+                .toolbar {
+                    ToolbarItem(placement: .primaryAction) {
+                        Button {
+                            showCreateMessage = true
+                        } label: {
+                            Image(systemName: "plus")
+                        }
+                        .sheet(isPresented: $showCreateMessage) {
+                            EditView()
+                        }
                     }
                 }
-            }
-            .navigationTitle("Saved messages")
+                .navigationTitle("Saved messages")
         }
     }
 
     private var pathItems: some View {
-        ForEach(messages) { message in
-            Text(message.title)
+        List {
+            ForEach(messages) { message in
+                NavigationLink {
+                    MessageDetailView(message: message)
+                } label: {
+                    MessageRow(message: message)
+                }
+            }
         }
+        .frame(minWidth: 300)
     }
 }
 
