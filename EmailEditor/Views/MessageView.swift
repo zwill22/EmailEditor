@@ -13,37 +13,6 @@ struct MessageView: View {
     @Query(sort: \Message.timestamp)
     private var messages: [Message]
 
-    var body: some View {
-        NavigationStack {
-            pathItems.frame(maxWidth: .infinity)
-                .overlay {
-                    if messages.isEmpty {
-                        ContentUnavailableView {
-                            Label(
-                                "No messages",
-                                systemImage: "exclamationmark.circle.fill"
-                            )
-                        } description: {
-                            Text("Add a message to see list of saved messages")
-                        }
-                    }
-                }
-                .toolbar {
-                    ToolbarItem(placement: .primaryAction) {
-                        Button {
-                            showCreateMessage = true
-                        } label: {
-                            Image(systemName: "plus")
-                        }
-                        .sheet(isPresented: $showCreateMessage) {
-                            EditView()
-                        }
-                    }
-                }
-                .navigationTitle("Saved messages")
-        }
-    }
-
     private var pathItems: some View {
         List {
             ForEach(messages) { message in
@@ -55,6 +24,44 @@ struct MessageView: View {
             }
         }
         .frame(minWidth: 300)
+    }
+
+    @ContentBuilder
+    private var overlayContent: some View {
+        if messages.isEmpty {
+            ContentUnavailableView {
+                Label(
+                    "No messages",
+                    systemImage: "exclamationmark.circle.fill"
+                )
+            } description: {
+                Text("Add a message to see list of saved messages")
+            }
+        }
+    }
+
+    @ToolbarContentBuilder
+    private var toolbarContent: some ToolbarContent {
+        ToolbarItem(placement: .primaryAction) {
+            NavigationLink {
+                EditView()
+            } label: {
+                Image(systemName: "plus")
+            }
+        }
+    }
+
+    var body: some View {
+        NavigationStack {
+            pathItems.frame(maxWidth: .infinity)
+                .overlay {
+                    overlayContent
+                }
+                .toolbar {
+                    toolbarContent
+                }
+                .navigationTitle("Saved messages")
+        }
     }
 }
 

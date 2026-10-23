@@ -18,5 +18,6 @@ struct EmailEditorApp: App {
                 .environment(dataContainer)
         }
         .modelContainer(dataContainer.modelContainer)
+        .windowResizability(.contentSize)
     }
 }

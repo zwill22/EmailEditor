@@ -13,18 +13,7 @@ struct RenderedMessageView: View {
     @Binding var address: String
     @Binding var message: String
 
-    var body: some View {
-        NavigationStack {
-            ScrollView {
-                contentStack
-            }
-            .scrollDismissesKeyboard(.interactively)
-            .navigationTitle("Viewer")
-
-        }
-    }
-
-    var contentStack: some View {
+    private var contentStack: some View {
         VStack(alignment: .leading) {
             if title.isEmpty {
                 Text("Title").font(.title).foregroundStyle(.secondary)
@@ -51,6 +40,13 @@ struct RenderedMessageView: View {
                     .frame(minWidth: 0, maxWidth: .infinity)
             }
         }
+    }
+
+    var body: some View {
+        ScrollView {
+            contentStack
+        }
+        .scrollDismissesKeyboard(.interactively)
     }
 }
 #Preview {
