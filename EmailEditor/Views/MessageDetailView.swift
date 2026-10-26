@@ -18,7 +18,10 @@ struct MessageDetailView: View {
 
     private var contentStack: some View {
         VStack(alignment: .leading) {
-            Text(message.timestamp, style: .date).font(.subheadline).padding(.bottom, 4)
+            Text(message.timestamp
+                .formatted(date: .long, time: .shortened))
+                .font(.subheadline).padding(.bottom, 4)
+
             MessageContentView(message: message)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
