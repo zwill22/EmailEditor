@@ -25,32 +25,8 @@ struct EditView: View {
                 }
                 .font(.title.bold())
 
-                Section(header: Text("Recipients")) {
-                    ForEach(message.addresses) { address in
-                        Text(address.address)
-                    }
-                    .onDelete { indices in
-                        message.addresses.remove(atOffsets: indices)
-                    }
-
-                    HStack {
-                        TextField("New Address", text: $newAddress)
-                        Button(
-                            action: {
-                                withAnimation {
-                                    let address = Message.Address(
-                                        address: newAddress
-                                    )
-                                    message.addresses.append(address)
-                                    newAddress = ""
-                                }
-                            },
-                            label: {
-                                Image(systemName: "plus.circle.fill")
-                                    .accessibilityLabel("Add address")
-                            }
-                        ).disabled(newAddress.isEmpty)
-                    }
+                Section(header: Text("To")) {
+                    AddressEditView(addresses: $message.addresses)
                 }
                 .font(.title2)
                 .padding(.top, 12)
