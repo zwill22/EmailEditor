@@ -9,49 +9,40 @@ import SwiftUI
 
 struct AddressEditView: View {
     @Binding var addresses: [Message.Address]
-    @State var newAddress = ""
 
     @State private var selectedItems: Set<UUID> = []
     
-    private let rowHeight: CGFloat = 32
-    var padY: CGFloat = 36
+    private func removeAddressButton(index: Int) -> some View {
+        Button {
+            addresses.remove(at: index)
+        } label: {
+            Image(systemName: "minus.circle.fill")
+        }
+    }
+
+    
+    private var addAddressButton: some View {
+        Button {
+            addresses.append(Message.Address(address: ""))
+        } label: {
+            Image(systemName: "plus.circle.fill")
+        }
+    }
 
     var body: some View {
-        VStack {
-            HStack {
-                TextField("New Address", text: $newAddress)
-                Button(
-                    action: {
-                        withAnimation {
-                            let address = Message.Address(
-                                address: newAddress
-                            )
-                            addresses.append(address)
-                            newAddress = ""
-                        }
-                    },
-                    label: {
-                        Image(systemName: "plus.circle.fill")
-                            .accessibilityLabel("Add address")
-                    }
-                ).disabled(newAddress.isEmpty)
-            }
-            .frame(maxWidth: .infinity)
-            
-            if !addresses.isEmpty {
-                List(selection: $selectedItems) {
-                    ForEach(addresses) { address in
-                        Text(address.address).lineLimit(1)
-                            .frame(height: rowHeight)
-                    }
-                    .onMove { indexSet, offset in
-                        addresses.move(fromOffsets: indexSet, toOffset: offset)
-                    }
-                    .onDelete { index in
-                        addresses.remove(atOffsets: index)
+        if addresses.isEmpty {
+            addAddressButton.frame(minWidth: 0, maxWidth: .infinity)
+        } else {
+            ForEach(addresses.indices, id: \.self) { index in
+                HStack {
+                    TextField(index == 0 ? "To" : "", text: $addresses[index].address)
+                    
+                    if (index == addresses.count - 1) {
+                        addAddressButton
+                    } else {
+                        removeAddressButton(index: index)
                     }
                 }
-                .frame(height: CGFloat(addresses.count) * rowHeight + padY)
             }
         }
     }

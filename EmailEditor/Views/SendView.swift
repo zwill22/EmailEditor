@@ -8,37 +8,62 @@
 import SwiftUI
 
 struct SendView: View {
+    @Environment(\.dismiss) private var dismiss
+
     @State var message: Message
 
     @State var title = ""
-    @State var addresses: [Message.Address] = []
+    @State var sendToMe = true
+    @State var newAddresses: [Message.Address] = [.init(address: "")]
+
+    private var templates = ["Plain"]
+    @State private var selectedTemplate = "Plain"
+
+    @ToolbarContentBuilder
+    var toolbarContent: some ToolbarContent {
+        ToolbarItem(placement: .cancellationAction) {
+            Button("Cancel", systemImage: "xmark") {
+                dismiss()
+            }
+        }
+
+        ToolbarItem(placement: .confirmationAction) {
+            Button("Send", systemImage: "paperplane.fill") {
+                // Send message
+                dismiss()
+            }
+        }
+    }
 
     var body: some View {
-        NavigationStack {
-            TextField(text: $title) {
-                Text("Title")
-            }
-            .font(.title.bold())
+        Form {
+            TextField("Subject", text: $message.title).font(.title)
 
             if !message.addresses.isEmpty {
-                HStack {
-                    Text("Previous Recipients").frame(maxWidth: 64)
+                Divider()
 
-                    AddressView(addresses: $message.addresses)
-                        .foregroundStyle(Color.secondary)
-                }
-                
+                AddressView(addresses: $message.addresses)
+
                 Divider()
             }
-            
-            HStack(alignment: .top) {
-                Text("To").frame(minWidth: 64, maxWidth: 64)
-                    .border(.pink)
-                AddressEditView(addresses: $addresses)
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .font(.title2)
+
+            AddressEditView(addresses: $newAddresses)
+                .frame(minWidth: 0, maxWidth: .infinity)
+                .font(.title2)
+
+            Divider()
+
+            Toggle("Send to me", isOn: $sendToMe)
+
+            Picker("Template", selection: $selectedTemplate) {
+                ForEach(templates, id: \.self) { template in
+                    Text(template)
+                }
             }
             .padding(.top)
+        }
+        .toolbar {
+            toolbarContent
         }
         .padding()
     }
