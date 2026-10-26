@@ -12,7 +12,8 @@ struct MessageDetailView: View {
     var message: Message
 
     @State private var showConfirmation = false
-
+    @State private var showSendMenu = false
+    
     @Environment(\.dismiss) private var dismiss
     @Environment(DataContainer.self) private var dataContainer
 
@@ -55,6 +56,14 @@ struct MessageDetailView: View {
             Text("The message will be permenently deleted")
         }
     }
+    
+    private var sendButton: some View {
+        Button {
+            showSendMenu = true
+        } label: {
+            Image(systemName: "paperplane.fill")
+        }
+    }
 
     @ToolbarContentBuilder
     private var toolbarContent: some ToolbarContent {
@@ -65,6 +74,10 @@ struct MessageDetailView: View {
         ToolbarItem(placement: .destructiveAction) {
             deleteButton
         }
+        
+        ToolbarItem(placement: .confirmationAction) {
+            sendButton
+        }
     }
 
     var body: some View {
@@ -74,6 +87,9 @@ struct MessageDetailView: View {
         .navigationTitle(message.title)
         .toolbar {
             toolbarContent
+        }
+        .sheet(isPresented: $showSendMenu) {
+            SendView(message: message)
         }
     }
 }

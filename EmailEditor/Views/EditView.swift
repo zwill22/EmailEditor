@@ -11,36 +11,10 @@ import SwiftUI
 struct EditView: View {
     @State var message: Message = .emptyMessage
 
-    @State private var newAddress = ""
     @State private var isShowingCancelConfirmation = false
 
     @Environment(\.dismiss) private var dismiss
     @Environment(DataContainer.self) private var dataContainer
-
-    private var editor: some View {
-        VStack(alignment: .leading) {
-            Form {
-                TextField(text: $message.title) {
-                    Text("Title")
-                }
-                .font(.title.bold())
-
-                Section(header: Text("To")) {
-                    AddressEditView(addresses: $message.addresses)
-                }
-                .font(.title2)
-                .padding(.top, 12)
-            }
-
-            Divider().padding(.vertical, 12)
-
-            TextEditor(text: $message.message)
-                .font(.title3)
-                .frame(minHeight: 256)
-
-        }
-        .padding()
-    }
 
     @ToolbarContentBuilder
     private var toolbarContent: some ToolbarContent {
@@ -82,7 +56,13 @@ struct EditView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                editor
+                HStackLayout {
+                    MessageEditView(message: $message)
+
+                    Divider()
+
+                    MessageContentView(message: message)
+                }
             }
             .scrollDismissesKeyboard(.interactively)
             .navigationTitle("Editor")

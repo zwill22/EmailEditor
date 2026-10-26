@@ -11,52 +11,29 @@ import SwiftUI
 struct MessageContentView: View {
     var message: Message
 
-    private var contentStack: some View {
-        VStack(alignment: .leading) {
-            Grid(alignment: .leading, verticalSpacing: 8) {
-                GridRow {
-                    Text("Title:").foregroundStyle(.placeholder).italic()
-
-                    if message.title.isEmpty {
-                        Text("Title").font(.title).foregroundStyle(.placeholder)
-                    } else {
-                        Text(message.title).font(.title)
-                    }
-                }
-
-                GridRow {
-                    Text("To:").foregroundStyle(.placeholder)
-                        .italic()
-
-                    ForEach(message.addresses) { address in
-                        Text(address.address).font(.title2)
-                    }
-                }
-            }
-           
-            Divider().padding(.vertical)
-
+    var body: some View {
+        VStack {
             if message.message.isEmpty {
+                Spacer()
+
                 ContentUnavailableView(
                     "Empty message",
                     systemImage: "long.text.page.and.pencil",
                     description: Text("Type message to render here")
-                ).padding()
+                )
+
+                Spacer()
             } else {
                 MarkdownText(message.message)
-                    .frame(minWidth: 0, maxWidth: .infinity)
+
+                Spacer()
             }
-
         }
-    }
-
-    var body: some View {
-        ScrollView {
-            contentStack
-        }
-        .scrollDismissesKeyboard(.interactively)
+        .frame(minWidth: 0, maxWidth: .infinity)
+        .padding()
     }
 }
+
 #Preview {
     MessageContentView(
         message: Message.sample
