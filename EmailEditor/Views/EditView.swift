@@ -9,10 +9,9 @@ import SwiftData
 import SwiftUI
 
 struct EditView: View {
-    @State var title = ""
-    @State var address = ""
-    @State var message = ""
+    @State var message: Message = .emptyMessage
 
+    @State private var newAddress = ""
     @State private var isShowingCancelConfirmation = false
 
     @Environment(\.dismiss) private var dismiss
@@ -20,48 +19,58 @@ struct EditView: View {
 
     private var editor: some View {
         VStack(alignment: .leading) {
-            TextField(text: $title) {
-                Text("Title (Required)")
-            }
-            .font(.title.bold())
+            Form {
+                TextField(text: $message.title) {
+                    Text("Title")
+                }
+                .font(.title.bold())
 
-            TextField(text: $address) {
-                Text("Recipient")
+                Section(header: Text("Recipients")) {
+                    ForEach(message.addresses) { address in
+                        Text(address.address)
+                    }
+                    .onDelete { indices in
+                        message.addresses.remove(atOffsets: indices)
+                    }
+
+                    HStack {
+                        TextField("New Address", text: $newAddress)
+                        Button(
+                            action: {
+                                withAnimation {
+                                    let address = Message.Address(
+                                        address: newAddress
+                                    )
+                                    message.addresses.append(address)
+                                    newAddress = ""
+                                }
+                            },
+                            label: {
+                                Image(systemName: "plus.circle.fill")
+                                    .accessibilityLabel("Add address")
+                            }
+                        ).disabled(newAddress.isEmpty)
+                    }
+                }
+                .font(.title2)
+                .padding(.top, 12)
             }
-            .font(.title2)
-            .padding(.top, 12)
 
             Divider().padding(.vertical, 12)
 
-            TextEditor(text: $message)
+            TextEditor(text: $message.message)
                 .font(.title3)
-                .frame(minHeight: 192)
+                .frame(minHeight: 256)
 
         }
         .padding()
-    }
-
-    private var content: some View {
-        HStack(alignment: .top, spacing: 0) {
-            editor
-                .frame(minWidth: 0, maxWidth: .infinity)
-            
-            Divider()
-            
-            RenderedMessageView(
-                title: $title,
-                address: $address,
-                message: $message
-            ).padding(.top, 16)
-                .frame(minWidth: 0, maxWidth: .infinity)
-        }
     }
 
     @ToolbarContentBuilder
     private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .cancellationAction) {
             Button("Cancel", systemImage: "xmark") {
-                if title.isEmpty, message.isEmpty, address.isEmpty {
+                if message.allEmpty {
                     dismiss()
                 } else {
                     isShowingCancelConfirmation = true
@@ -78,12 +87,8 @@ struct EditView: View {
         }
         ToolbarItem(placement: .confirmationAction) {
             Button("Add", systemImage: "checkmark") {
-                let newMessage = Message(
-                    title: title,
-                    message: message,
-                    addresses: [address],
-                    timestamp: .now
-                )
+                let newMessage = message
+                message.timestamp = .now
 
                 dataContainer.context.insert(newMessage)
 
@@ -94,16 +99,14 @@ struct EditView: View {
                     // Don't dismiss
                 }
             }
-            .disabled(title.isEmpty)
-            .disabled(address.isEmpty)
-            .disabled(message.isEmpty)
+            .disabled(message.emptyField)
         }
     }
 
     var body: some View {
         NavigationStack {
             ScrollView {
-                content
+                editor
             }
             .scrollDismissesKeyboard(.interactively)
             .navigationTitle("Editor")

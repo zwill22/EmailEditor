@@ -9,7 +9,7 @@ import SwiftData
 import SwiftUI
 
 struct MessageDetailView: View {
-    @Bindable var message: Message
+    var message: Message
 
     @State private var showConfirmation = false
 
@@ -18,12 +18,8 @@ struct MessageDetailView: View {
 
     private var contentStack: some View {
         VStack(alignment: .leading) {
-            Text(message.timestamp, style: .date).font(.subheadline)
-            RenderedMessageView(
-                title: $message.title,
-                address: $message.addresses[0],
-                message: $message.message
-            )
+            Text(message.timestamp, style: .date).font(.subheadline).padding(.bottom, 4)
+            MessageContentView(message: message)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding()
@@ -31,11 +27,7 @@ struct MessageDetailView: View {
 
     private var editButton: some View {
         NavigationLink {
-            EditView(
-                title: message.title,
-                address: message.addresses[0],
-                message: message.message,
-            )
+            EditView(message: message)
         } label: {
             Image(systemName: "long.text.page.and.pencil")
         }

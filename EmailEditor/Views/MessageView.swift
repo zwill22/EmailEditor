@@ -10,7 +10,9 @@ import SwiftUI
 
 struct MessageView: View {
     @State private var showCreateMessage = false
-    @Query(sort: \Message.timestamp)
+    
+    @Query(sort: \Message.timestamp, order: .reverse)
+    
     private var messages: [Message]
 
     private var pathItems: some View {
