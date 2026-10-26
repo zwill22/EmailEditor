@@ -1,3 +1,3 @@
-# Email editor for macOS
+# Markdown editor for macOS
 
-For sending professional HTML emails using macOS and Markdown templates.
+Markdown editor with support for sending professional HTML emails using macOS
