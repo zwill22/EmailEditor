@@ -1,20 +1,20 @@
 //
-//  SendView.swift
-//  EmailEditor
+//  EmailView.swift
+//  MdEditor
 //
 //  Created by Zack Williams on 26-10-2026.
 //
 
 import SwiftUI
 
-struct SendView: View {
+struct EmailView: View {
     @Environment(\.dismiss) private var dismiss
 
-    @State var message: Message
+    @State var document: Document
 
     @State var title = ""
     @State var sendToMe = true
-    @State var newAddresses: [Message.Address] = [.init(address: "")]
+    @State var newAddresses: [Address] = [.init(address: "")]
 
     private var templates = ["Plain"]
     @State private var selectedTemplate = "Plain"
@@ -37,17 +37,17 @@ struct SendView: View {
 
     var body: some View {
         Form {
-            TextField("Subject", text: $message.title).font(.title)
+            TextField("Subject", text: $title).font(.title)
 
-            if !message.addresses.isEmpty {
+            if !document.addresses.isEmpty {
                 Divider()
 
-                AddressView(addresses: $message.addresses)
+                AddressList(addresses: $document.addresses)
 
                 Divider()
             }
 
-            AddressEditView(addresses: $newAddresses)
+            AddressEditor(addresses: $newAddresses)
                 .frame(minWidth: 0, maxWidth: .infinity)
                 .font(.title2)
 
@@ -71,5 +71,5 @@ struct SendView: View {
 }
 
 #Preview {
-    SendView(message: .sample)
+    EmailView(document: .sample)
 }

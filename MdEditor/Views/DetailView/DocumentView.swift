@@ -1,6 +1,6 @@
 //
-//  MessageViewer.swift
-//  EmailEditor
+//  DocumentView.swift
+//  MdEditor
 //
 //  Created by Zack Williams on 22-10-2026.
 //
@@ -8,23 +8,23 @@
 import MarkdownView
 import SwiftUI
 
-struct MessageContentView: View {
-    var message: Message
+struct DocumentView: View {
+    var document: Document
 
     var body: some View {
         VStack {
-            if message.message.isEmpty {
+            if document.content.isEmpty {
                 Spacer()
 
                 ContentUnavailableView(
-                    "Empty message",
+                    "Empty document",
                     systemImage: "long.text.page.and.pencil",
-                    description: Text("Type message to render here")
+                    description: Text("Type document to render here")
                 )
 
                 Spacer()
             } else {
-                MarkdownText(message.message)
+                MarkdownText(document.content)
 
                 Spacer()
             }
@@ -35,7 +35,7 @@ struct MessageContentView: View {
 }
 
 #Preview {
-    MessageContentView(
-        message: Message.sample
+    DocumentView(
+        document: .sampleData[0]
     )
 }

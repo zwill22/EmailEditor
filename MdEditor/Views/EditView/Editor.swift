@@ -1,17 +1,17 @@
 //
-//  MessageEditView.swift
-//  EmailEditor
+//  Editor.swift
+//  MdEditor
 //
 //  Created by Zack Williams on 26-10-2026.
 //
 
 import SwiftUI
 
-struct MessageEditView: View {
-    @Binding var message: Message
+struct Editor: View {
+    @Binding var document: Document
 
     var body: some View {
-        TextEditor(text: $message.message)
+        TextEditor(text: $document.content)
             .multilineTextAlignment(.leading)
             .scrollContentBackground(.hidden)
             .foregroundColor(.primary)
@@ -22,5 +22,5 @@ struct MessageEditView: View {
 }
 
 #Preview {
-    EditView().sampleDataContainer()
+    Editor(document: .constant(.sample))
 }

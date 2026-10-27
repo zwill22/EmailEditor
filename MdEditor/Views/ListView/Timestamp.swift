@@ -1,6 +1,6 @@
 //
-//  MessageTimestamp.swift
-//  EmailEditor
+//  Timestamp.swift
+//  MdEditor
 //
 //  Created by Zack Williams on 23-10-2026.
 //
@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct MessageTimestamp: View {
+struct Timestamp: View {
     var timestamp: Date = .now
 
     var calendar: Calendar = .current
@@ -45,5 +45,5 @@ struct MessageTimestamp: View {
 }
 
 #Preview {
-    MessageTimestamp()
+    Timestamp()
 }

@@ -1,13 +1,13 @@
 //
-//  MessageIcon.swift
-//  EmailEditor
+//  Icon.swift
+//  MdEditor
 //
 //  Created by Zack Williams on 21-10-2026.
 //
 
 import SwiftUI
 
-struct MessageIcon: View {
+struct Icon: View {
     var height: CGFloat = 60
     var body: some View {
         RoundedRectangle(cornerRadius: 8)
@@ -25,5 +25,5 @@ struct MessageIcon: View {
 }
 
 #Preview {
-    MessageIcon()
+    Icon()
 }

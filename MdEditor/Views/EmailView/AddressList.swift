@@ -1,14 +1,14 @@
 //
-//  AddressView.swift
-//  EmailEditor
+//  AddressList.swift
+//  MdEditor
 //
 //  Created by Zack Williams on 26-10-2026.
 //
 
 import SwiftUI
 
-struct AddressView: View {
-    @Binding var addresses: [Message.Address]
+struct AddressList: View {
+    @Binding var addresses: [Address]
 
     private func copy(index: Int) {
         NSPasteboard.general.declareTypes([.string], owner: nil)
@@ -42,5 +42,5 @@ struct AddressView: View {
 }
 
 #Preview {
-    AddressView(addresses: .constant(Message.sample.addresses))
+    AddressList(addresses: .constant(Address.sampleData))
 }

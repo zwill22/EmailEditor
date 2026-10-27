@@ -87,7 +87,7 @@
 				CED6C73A3090A36000AE839C /* CodeEditorView */,
 				CED6C73C3090A36000AE839C /* LanguageSupport */,
 			);
-			productName = EmailEditor;
+			productName = MdEditor;
 			productReference = CE0808383089070A0065D9F3 /* MdEditor.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -290,7 +290,7 @@
 				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = EmailEditor/Info.plist;
+				INFOPLIST_FILE = MdEditor/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -298,7 +298,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = zwill.EmailEditor;
+				PRODUCT_BUNDLE_IDENTIFIER = zwill.MdEditor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -334,7 +334,7 @@
 				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = EmailEditor/Info.plist;
+				INFOPLIST_FILE = MdEditor/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -342,7 +342,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = zwill.EmailEditor;
+				PRODUCT_BUNDLE_IDENTIFIER = zwill.MdEditor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;

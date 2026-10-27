@@ -1,6 +1,6 @@
 //
 //  EditView.swift
-//  EmailEditor
+//  MdEditor
 //
 //  Created by Zack Williams on 21-10-2026.
 //
@@ -9,7 +9,7 @@ import SwiftData
 import SwiftUI
 
 struct EditView: View {
-    @State var message: Message = .emptyMessage
+    @State var document: Document = .init()
 
     @State private var isShowingCancelConfirmation = false
 
@@ -20,25 +20,25 @@ struct EditView: View {
     private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .cancellationAction) {
             Button("Cancel", systemImage: "xmark") {
-                if message.allEmpty {
+                if document.content.isEmpty {
                     dismiss()
                 } else {
                     isShowingCancelConfirmation = true
                 }
             }
             .confirmationDialog(
-                "Discard message",
+                "Discard document",
                 isPresented: $isShowingCancelConfirmation
             ) {
-                Button("Discard message", role: .destructive) {
+                Button("Discard document", role: .destructive) {
                     dismiss()
                 }
             }
         }
         ToolbarItem(placement: .confirmationAction) {
             Button("Add", systemImage: "checkmark") {
-                let newMessage = message
-                message.timestamp = .now
+                let newMessage = document
+                document.timestamp = .now
 
                 dataContainer.context.insert(newMessage)
 
@@ -49,7 +49,7 @@ struct EditView: View {
                     // Don't dismiss
                 }
             }
-            .disabled(message.emptyField)
+            .disabled(document.content.isEmpty)
         }
     }
 
@@ -57,11 +57,11 @@ struct EditView: View {
         NavigationStack {
             ScrollView {
                 HStackLayout {
-                    MessageEditView(message: $message)
+                    Editor(document: $document)
 
                     Divider()
 
-                    MessageContentView(message: message)
+                    DocumentView(document: document)
                 }
             }
             .scrollDismissesKeyboard(.interactively)

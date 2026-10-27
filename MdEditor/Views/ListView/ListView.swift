@@ -1,6 +1,6 @@
 //
-//  MessageView.swift
-//  EmailEditor
+//  ListView.swift
+//  MdEditor
 //
 //  Created by Zack Williams on 21-10-2026.
 //
@@ -8,20 +8,18 @@
 import SwiftData
 import SwiftUI
 
-struct MessageView: View {
-    @State private var showCreateMessage = false
+struct ListView: View {
+    var documents: [Document]
     
-    @Query(sort: \Message.timestamp, order: .reverse)
-    
-    private var messages: [Message]
+    @State private var showCreateDocument = false
 
     private var pathItems: some View {
         List {
-            ForEach(messages) { message in
+            ForEach(documents) { document in
                 NavigationLink {
-                    MessageDetailView(message: message)
+                    DocumentView(document: document)
                 } label: {
-                    MessageRow(message: message)
+                    ListItem(document: document)
                 }
             }
         }
@@ -30,14 +28,14 @@ struct MessageView: View {
 
     @ContentBuilder
     private var overlayContent: some View {
-        if messages.isEmpty {
+        if documents.isEmpty {
             ContentUnavailableView {
                 Label(
-                    "No messages",
+                    "No documents",
                     systemImage: "exclamationmark.circle.fill"
                 )
             } description: {
-                Text("Add a message to see list of saved messages")
+                Text("Add a document to see list of saved documents")
             }
         }
     }
@@ -62,17 +60,15 @@ struct MessageView: View {
                 .toolbar {
                     toolbarContent
                 }
-                .navigationTitle("Saved messages")
+                .navigationTitle("Saved documents")
         }
     }
 }
 
 #Preview {
-    MessageView()
-        .sampleDataContainer()
+    ListView(documents: Document.sampleData)
 }
 
-#Preview("No messages") {
-    MessageView()
-        .modelContainer(for: [Message.self])
+#Preview("No documents") {
+    ListView(documents: [])
 }

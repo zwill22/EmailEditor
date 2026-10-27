@@ -1,17 +1,17 @@
 //
-//  AddressEditView.swift
-//  EmailEditor
+//  AddressEditor.swift
+//  MdEditor
 //
 //  Created by Zack Williams on 26-10-2026.
 //
 
 import SwiftUI
 
-struct AddressEditView: View {
-    @Binding var addresses: [Message.Address]
+struct AddressEditor: View {
+    @Binding var addresses: [Address]
 
     @State private var selectedItems: Set<UUID> = []
-    
+
     private func removeAddressButton(index: Int) -> some View {
         Button {
             addresses.remove(at: index)
@@ -20,10 +20,9 @@ struct AddressEditView: View {
         }
     }
 
-    
     private var addAddressButton: some View {
         Button {
-            addresses.append(Message.Address(address: ""))
+            addresses.append(Address(address: ""))
         } label: {
             Image(systemName: "plus.circle.fill")
         }
@@ -35,9 +34,12 @@ struct AddressEditView: View {
         } else {
             ForEach(addresses.indices, id: \.self) { index in
                 HStack {
-                    TextField(index == 0 ? "To" : "", text: $addresses[index].address)
-                    
-                    if (index == addresses.count - 1) {
+                    TextField(
+                        index == 0 ? "To" : "",
+                        text: $addresses[index].address
+                    )
+
+                    if index == addresses.count - 1 {
                         addAddressButton
                     } else {
                         removeAddressButton(index: index)
@@ -49,5 +51,5 @@ struct AddressEditView: View {
 }
 
 #Preview {
-    AddressEditView(addresses: .constant(Message.sample.addresses))
+    AddressEditor(addresses: .constant(Address.sampleData))
 }

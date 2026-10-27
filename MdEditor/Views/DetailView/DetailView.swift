@@ -1,6 +1,6 @@
 //
-//  MessageDetailView.swift
-//  EmailEditor
+//  DetailView.swift
+//  MdEditor
 //
 //  Created by Zack Williams on 21-10-2026.
 //
@@ -8,8 +8,8 @@
 import SwiftData
 import SwiftUI
 
-struct MessageDetailView: View {
-    var message: Message
+struct DetailView: View {
+    var document: Document
 
     @State private var showConfirmation = false
     @State private var showSendMenu = false
@@ -19,11 +19,11 @@ struct MessageDetailView: View {
 
     private var contentStack: some View {
         VStack(alignment: .leading) {
-            Text(message.timestamp
+            Text(document.timestamp
                 .formatted(date: .long, time: .shortened))
                 .font(.subheadline).padding(.bottom, 4)
 
-            MessageContentView(message: message)
+            DocumentView(document: document)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding()
@@ -31,7 +31,7 @@ struct MessageDetailView: View {
 
     private var editButton: some View {
         NavigationLink {
-            EditView(message: message)
+            EditView(document: document)
         } label: {
             Image(systemName: "long.text.page.and.pencil")
         }
@@ -48,7 +48,7 @@ struct MessageDetailView: View {
             isPresented: $showConfirmation
         ) {
             Button("Delete message", role: .destructive) {
-                dataContainer.context.delete(message)
+                dataContainer.context.delete(document)
                 try? dataContainer.context.save()
                 dismiss()
             }
@@ -84,19 +84,19 @@ struct MessageDetailView: View {
         ScrollView {
             contentStack
         }
-        .navigationTitle(message.title)
+        .navigationTitle(document.subject)
         .toolbar {
             toolbarContent
         }
         .sheet(isPresented: $showSendMenu) {
-            SendView(message: message)
+            EmailView(document: document)
         }
     }
 }
 
 #Preview {
     NavigationStack {
-        MessageDetailView(message: .sample)
+        DetailView(document: .sample)
             .sampleDataContainer()
     }
 }

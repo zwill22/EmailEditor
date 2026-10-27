@@ -1,6 +1,6 @@
 //
 //  DataContainer.swift
-//  EmailEditor
+//  MdEditor
 //
 //  Created by Zack Williams on 21-10-2026.
 //
@@ -19,7 +19,7 @@ class DataContainer {
 
     init(includeSample: Bool = false) {
         let schema = Schema([
-            Message.self
+            Document.self
         ])
 
         let modelConfiguration = ModelConfiguration(
@@ -44,7 +44,7 @@ class DataContainer {
     }
 
     private func loadSamples() {
-        for message in Message.sampleData {
+        for message in Document.sampleData {
             context.insert(message)
         }
     }
