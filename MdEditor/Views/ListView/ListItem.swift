@@ -5,6 +5,7 @@
 //  Created by Zack Williams on 21-10-2026.
 //
 
+import MarkdownView
 import SwiftUI
 
 struct ListItem: View {
@@ -16,12 +17,14 @@ struct ListItem: View {
 
             VStack(alignment: .leading) {
 
-                Text(document.subject)
+                Text(document.title)
                     .lineLimit(1)
                     .font(.title)
                     .padding(.bottom, 2)
 
-                Text(document.content).font(.caption).italic()
+                Text(document.start)
+                    .font(.caption)
+                    .italic()
                     .lineLimit(1)
             }
 

@@ -8,6 +8,16 @@
 import Foundation
 import SwiftData
 
+func markdownToText(_ markdown: String) -> String {
+    guard let attributed = try? AttributedString(markdown: markdown) else {
+        return markdown
+    }
+    
+    // Extract raw string
+    return String(attributed.characters)
+}
+
+
 @Model
 class Document {
     var content: String
@@ -15,6 +25,36 @@ class Document {
 
     var addresses: [Address]
     var subject: String
+
+    var start: String {
+        let textRegex = Regex(pattern: ##"^([^#\n_>!`\*].+)$"##)
+
+        if let groups = textRegex.extractFirst(inputString: content) {
+            return markdownToText(groups[0])
+        }
+
+        if let substring = content.split(
+            maxSplits: 1,
+            whereSeparator: \.isNewline
+        ).first {
+            return markdownToText(String(substring))
+        }
+
+        return "Empty document"
+    }
+   
+    
+    var title: String {
+        let titleRegex = Regex(pattern: ##"^# (.+)$"##)
+
+        if let groups = titleRegex.extractFirst(inputString: content) {
+            return markdownToText(groups[0])
+        } else if !subject.isEmpty {
+            return subject
+        } else {
+            return start
+        }
+    }
 
     init(
         content: String = "",
