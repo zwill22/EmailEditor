@@ -10,18 +10,14 @@ import SwiftUI
 
 struct ListView: View {
     var documents: [Document]
-    
+
+    @Binding var selection: Document?
+
     @State private var showCreateDocument = false
 
     private var pathItems: some View {
-        List {
-            ForEach(documents) { document in
-                NavigationLink {
-                    DocumentView(document: document)
-                } label: {
-                    ListItem(document: document)
-                }
-            }
+        List(documents, id: \.self, selection: $selection) { document in
+            ListItem(document: document)
         }
         .frame(minWidth: 300)
     }
@@ -66,9 +62,9 @@ struct ListView: View {
 }
 
 #Preview {
-    ListView(documents: Document.sampleData)
+    ListView(documents: Document.sampleData, selection: .constant(nil))
 }
 
 #Preview("No documents") {
-    ListView(documents: [])
+    ListView(documents: [], selection: .constant(nil))
 }
