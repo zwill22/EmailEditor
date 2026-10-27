@@ -8,16 +8,31 @@
 
 /* Begin PBXBuildFile section */
 		CE080A42308A539E0065D9F3 /* MarkdownView in Frameworks */ = {isa = PBXBuildFile; productRef = CE080A41308A539E0065D9F3 /* MarkdownView */; };
+		CED6C73B3090A36000AE839C /* CodeEditorView in Frameworks */ = {isa = PBXBuildFile; productRef = CED6C73A3090A36000AE839C /* CodeEditorView */; };
+		CED6C73D3090A36000AE839C /* LanguageSupport in Frameworks */ = {isa = PBXBuildFile; productRef = CED6C73C3090A36000AE839C /* LanguageSupport */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		CE0808383089070A0065D9F3 /* EmailEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EmailEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE0808383089070A0065D9F3 /* MdEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MdEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		CE856DDC308FCE3B00CD46CC /* Exceptions for "MdEditor" folder in "MdEditor" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = CE0808373089070A0065D9F3 /* MdEditor */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		CE08083A3089070A0065D9F3 /* EmailEditor */ = {
+		CE08083A3089070A0065D9F3 /* MdEditor */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = EmailEditor;
+			exceptions = (
+				CE856DDC308FCE3B00CD46CC /* Exceptions for "MdEditor" folder in "MdEditor" target */,
+			);
+			path = MdEditor;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -27,6 +42,8 @@
 			isa = PBXFrameworksBuildPhase;
 			files = (
 				CE080A42308A539E0065D9F3 /* MarkdownView in Frameworks */,
+				CED6C73D3090A36000AE839C /* LanguageSupport in Frameworks */,
+				CED6C73B3090A36000AE839C /* CodeEditorView in Frameworks */,
 			);
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -35,7 +52,7 @@
 		CE08082F3089070A0065D9F3 = {
 			isa = PBXGroup;
 			children = (
-				CE08083A3089070A0065D9F3 /* EmailEditor */,
+				CE08083A3089070A0065D9F3 /* MdEditor */,
 				CE0808393089070A0065D9F3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -43,7 +60,7 @@
 		CE0808393089070A0065D9F3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CE0808383089070A0065D9F3 /* EmailEditor.app */,
+				CE0808383089070A0065D9F3 /* MdEditor.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -51,9 +68,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		CE0808373089070A0065D9F3 /* EmailEditor */ = {
+		CE0808373089070A0065D9F3 /* MdEditor */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CE0808433089070B0065D9F3 /* Build configuration list for PBXNativeTarget "EmailEditor" */;
+			buildConfigurationList = CE0808433089070B0065D9F3 /* Build configuration list for PBXNativeTarget "MdEditor" */;
 			buildPhases = (
 				CE0808343089070A0065D9F3 /* Sources */,
 				CE0808353089070A0065D9F3 /* Frameworks */,
@@ -62,14 +79,16 @@
 			buildRules = (
 			);
 			fileSystemSynchronizedGroups = (
-				CE08083A3089070A0065D9F3 /* EmailEditor */,
+				CE08083A3089070A0065D9F3 /* MdEditor */,
 			);
-			name = EmailEditor;
+			name = MdEditor;
 			packageProductDependencies = (
 				CE080A41308A539E0065D9F3 /* MarkdownView */,
+				CED6C73A3090A36000AE839C /* CodeEditorView */,
+				CED6C73C3090A36000AE839C /* LanguageSupport */,
 			);
 			productName = EmailEditor;
-			productReference = CE0808383089070A0065D9F3 /* EmailEditor.app */;
+			productReference = CE0808383089070A0065D9F3 /* MdEditor.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -87,7 +106,7 @@
 					};
 				};
 			};
-			buildConfigurationList = CE0808333089070A0065D9F3 /* Build configuration list for PBXProject "EmailEditor" */;
+			buildConfigurationList = CE0808333089070A0065D9F3 /* Build configuration list for PBXProject "MdEditor" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -98,13 +117,14 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				CE080A40308A539E0065D9F3 /* XCRemoteSwiftPackageReference "MarkdownView" */,
+				CED6C7393090A36000AE839C /* XCRemoteSwiftPackageReference "CodeEditorView" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = CE0808393089070A0065D9F3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				CE0808373089070A0065D9F3 /* EmailEditor */,
+				CE0808373089070A0065D9F3 /* MdEditor */,
 			);
 		};
 /* End PBXProject section */
@@ -126,7 +146,7 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		CE0808413089070B0065D9F3 /* Debug configuration for PBXProject "EmailEditor" */ = {
+		CE0808413089070B0065D9F3 /* Debug configuration for PBXProject "MdEditor" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -190,7 +210,7 @@
 			};
 			name = Debug;
 		};
-		CE0808423089070B0065D9F3 /* Release configuration for PBXProject "EmailEditor" */ = {
+		CE0808423089070B0065D9F3 /* Release configuration for PBXProject "MdEditor" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -246,7 +266,7 @@
 			};
 			name = Release;
 		};
-		CE0808443089070B0065D9F3 /* Debug configuration for PBXNativeTarget "EmailEditor" */ = {
+		CE0808443089070B0065D9F3 /* Debug configuration for PBXNativeTarget "MdEditor" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -270,6 +290,8 @@
 				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = EmailEditor/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -288,7 +310,7 @@
 			};
 			name = Debug;
 		};
-		CE0808453089070B0065D9F3 /* Release configuration for PBXNativeTarget "EmailEditor" */ = {
+		CE0808453089070B0065D9F3 /* Release configuration for PBXNativeTarget "MdEditor" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -312,6 +334,8 @@
 				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = EmailEditor/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -333,19 +357,19 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CE0808333089070A0065D9F3 /* Build configuration list for PBXProject "EmailEditor" */ = {
+		CE0808333089070A0065D9F3 /* Build configuration list for PBXProject "MdEditor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				CE0808413089070B0065D9F3 /* Debug configuration for PBXProject "EmailEditor" */,
-				CE0808423089070B0065D9F3 /* Release configuration for PBXProject "EmailEditor" */,
+				CE0808413089070B0065D9F3 /* Debug configuration for PBXProject "MdEditor" */,
+				CE0808423089070B0065D9F3 /* Release configuration for PBXProject "MdEditor" */,
 			);
 			defaultConfigurationName = Release;
 		};
-		CE0808433089070B0065D9F3 /* Build configuration list for PBXNativeTarget "EmailEditor" */ = {
+		CE0808433089070B0065D9F3 /* Build configuration list for PBXNativeTarget "MdEditor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				CE0808443089070B0065D9F3 /* Debug configuration for PBXNativeTarget "EmailEditor" */,
-				CE0808453089070B0065D9F3 /* Release configuration for PBXNativeTarget "EmailEditor" */,
+				CE0808443089070B0065D9F3 /* Debug configuration for PBXNativeTarget "MdEditor" */,
+				CE0808453089070B0065D9F3 /* Release configuration for PBXNativeTarget "MdEditor" */,
 			);
 			defaultConfigurationName = Release;
 		};
@@ -360,6 +384,14 @@
 				minimumVersion = 3.0.0;
 			};
 		};
+		CED6C7393090A36000AE839C /* XCRemoteSwiftPackageReference "CodeEditorView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mchakravarty/CodeEditorView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.16.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -367,6 +399,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CE080A40308A539E0065D9F3 /* XCRemoteSwiftPackageReference "MarkdownView" */;
 			productName = MarkdownView;
+		};
+		CED6C73A3090A36000AE839C /* CodeEditorView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CED6C7393090A36000AE839C /* XCRemoteSwiftPackageReference "CodeEditorView" */;
+			productName = CodeEditorView;
+		};
+		CED6C73C3090A36000AE839C /* LanguageSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CED6C7393090A36000AE839C /* XCRemoteSwiftPackageReference "CodeEditorView" */;
+			productName = LanguageSupport;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
