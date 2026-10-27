@@ -9,11 +9,11 @@ import MarkdownView
 import SwiftUI
 
 struct ListItem: View {
-    var document: Document
+    @State var document: Document
 
     var body: some View {
         HStack {
-            Icon(height: 60)
+            Icon(document: $document, height: 60)
 
             VStack(alignment: .leading) {
 
