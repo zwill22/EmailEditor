@@ -25,6 +25,14 @@ struct DocumentView: View {
                 Spacer()
             } else {
                 MarkdownText(document.content)
+                    .markdownTableStyle(.github)
+                    .markdownBlockQuoteStyle(.github)
+                    .markdownCodeBlockStyle(
+                        .default(
+                            lightTheme: "xcode",
+                            darkTheme: "xcode-dark"
+                        )
+                    )
 
                 Spacer()
             }
@@ -36,6 +44,18 @@ struct DocumentView: View {
 
 #Preview {
     DocumentView(
-        document: .sampleData[0]
+        document: .sample
+    )
+}
+
+#Preview("Code Preview") {
+    DocumentView(
+        document: .codeSample
+    )
+}
+
+#Preview("Quote Preview") {
+    DocumentView(
+        document: .sampleData[4]
     )
 }

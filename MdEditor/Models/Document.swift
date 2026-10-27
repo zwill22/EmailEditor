@@ -12,11 +12,10 @@ func markdownToText(_ markdown: String) -> String {
     guard let attributed = try? AttributedString(markdown: markdown) else {
         return markdown
     }
-    
+
     // Extract raw string
     return String(attributed.characters)
 }
-
 
 @Model
 class Document {
@@ -42,8 +41,7 @@ class Document {
 
         return "Empty document"
     }
-   
-    
+
     var title: String {
         let titleRegex = Regex(pattern: ##"^# (.+)$"##)
 
@@ -73,6 +71,8 @@ class Document {
 
 extension Document {
     static let sample = sampleData[0]
+
+    static let codeSample = sampleData[8]
 
     static let sampleData = [
         Document(
@@ -146,6 +146,8 @@ extension Document {
                 One is plain and unadorned, but the other nine are nice.
 
                 I'm going to take them, I'm sure nothing bad will happen.
+
+                > Insert quote here
                 """,
             addresses: [
                 "mgrth-fan@mddl.ea", "srn@eye.mrdr", "clbrmbr@hlln.ea",
@@ -187,6 +189,36 @@ extension Document {
             subject: "No try",
             timestamp: .now.addingTimeInterval(-86400 * 7)
         ),
+        Document(
+            content: """
+                # Code examples
+
+                C++
+
+                ```cpp
+                int add(const int x, const int y) {
+                    return x + y;
+                }
+                ```
+
+                Python
+
+                ```python
+
+                def subtract(x: int, y: int) -> int:
+                    return x - y
+                ```
+
+                Rust
+
+                ```rust
+                fn multiply(x: f64, y: f64) -> f64 {
+                    x * y
+                }
+                ```
+                """
+        ),
+
     ]
 
 }
