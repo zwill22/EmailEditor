@@ -16,8 +16,11 @@ struct EmailView: View {
     @State var sendToMe = true
     @State var newAddresses: [Address] = [.init(address: "")]
 
-    private var templates = ["Plain"]
-    @State private var selectedTemplate = "Plain"
+    @State var provider = TemplateProvider()
+
+    @State private var selection: String = "Plain"
+    @State private var error: TemplateError?
+    @State private var hasError = false
 
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
@@ -35,37 +38,61 @@ struct EmailView: View {
         }
     }
 
+    func fetchTemplates() {
+        do {
+            try provider.fetchTemplates()
+        } catch {
+            self.error =
+                error as? TemplateError ?? .unexpectedError(error: error)
+
+            self.hasError = true
+        }
+    }
+
+    var templatePicker: some View {
+        Picker(
+            "Template",
+            selection: $selection
+        ) {
+            ForEach(provider.templates) { template in
+                Text(template.name).tag(template.name)
+            }
+        }
+    }
+
     var body: some View {
-        Form {
-            TextField("Subject", text: $title).font(.title)
+        NavigationStack {
+            Form {
+                TextField("Subject", text: $title).font(.title2)
 
-            if !document.addresses.isEmpty {
-                Divider()
+                if !document.addresses.isEmpty {
+                    Divider()
 
-                AddressList(addresses: $document.addresses)
+                    AddressList(addresses: $document.addresses)
 
-                Divider()
-            }
-
-            AddressEditor(addresses: $newAddresses)
-                .frame(minWidth: 0, maxWidth: .infinity)
-                .font(.title2)
-
-            Divider()
-
-            Toggle("Send to me", isOn: $sendToMe)
-
-            Picker("Template", selection: $selectedTemplate) {
-                ForEach(templates, id: \.self) { template in
-                    Text(template)
+                    Divider()
                 }
+
+                AddressEditor(addresses: $newAddresses)
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .font(.title2)
+
+                Divider()
+
+                Toggle("Send to me", isOn: $sendToMe)
+
+                templatePicker.padding(.top)
             }
-            .padding(.top)
+            .toolbar {
+                toolbarContent
+            }
+            .padding()
+            .alert(isPresented: $hasError, error: error) {}
         }
-        .toolbar {
-            toolbarContent
+        .task {
+            fetchTemplates()
         }
-        .padding()
+
     }
 
 }
