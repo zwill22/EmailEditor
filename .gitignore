@@ -1,2 +1,11 @@
 MdEditor/Resources/business.hbs
 xcuserdata*
+
+.DS_Store
+.build
+Packages
+
+DerivedData
+.swiftpm
+
+.netrc
