@@ -30,6 +30,8 @@ struct EmailView: View {
     @State private var error: EditorError?
     @State private var hasError = false
 
+    @State private var showNewAccountMenu = false
+
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .cancellationAction) {
@@ -129,6 +131,37 @@ struct EmailView: View {
         }
     }
 
+    var accountPicker: some View {
+        Picker("Email account", selection: $selectedAccount) {
+            ForEach(accounts) { account in
+                Text("\(account.name) - \(account.emailAddress)").tag(
+                    account.persistentModelID
+                )
+            }
+        }.pickerStyle(.automatic)
+    }
+
+    private var addAccountButton: some View {
+        Button {
+            self.showNewAccountMenu = true
+        } label: {
+            Image(systemName: "plus.circle.fill")
+        }
+        .sheet(isPresented: $showNewAccountMenu) {
+            self.showNewAccountMenu = false
+        } content: {
+            NewAccountView().navigationTitle("Add Email Account").padding()
+        }
+
+    }
+
+    var accountMenu: some View {
+        HStack {
+            accountPicker
+            addAccountButton
+        }
+    }
+
     var templatePicker: some View {
         Picker(
             "Template",
@@ -149,13 +182,7 @@ struct EmailView: View {
 
     var body: some View {
         Form {
-            Picker("Email account", selection: $selectedAccount) {
-                ForEach(accounts) { account in
-                    Text("\(account.name) - \(account.emailAddress)").tag(
-                        account.persistentModelID
-                    )
-                }
-            }.pickerStyle(.automatic)
+            accountMenu
 
             TextField("Subject", text: $title)
 
