@@ -55,14 +55,12 @@ struct EditView: View {
 
     var body: some View {
         NavigationStack {
-            ScrollView {
-                HStackLayout {
-                    Editor(document: $document)
+            HStackLayout {
+                Editor(document: $document)
 
-                    Divider()
+                Divider()
 
-                    DocumentView(document: document)
-                }
+                DocumentView(document: document)
             }
             .scrollDismissesKeyboard(.interactively)
             .navigationTitle("Editor")

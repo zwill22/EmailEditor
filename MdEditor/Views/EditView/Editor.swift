@@ -17,6 +17,9 @@ struct Editor: View {
             .foregroundColor(.primary)
             .background(Color.clear)
             .font(.title3)
+            .frame(
+                maxHeight: .infinity
+            )
             .padding()
     }
 }

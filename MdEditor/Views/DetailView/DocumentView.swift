@@ -24,15 +24,17 @@ struct DocumentView: View {
 
                 Spacer()
             } else {
-                MarkdownText(document.content)
-                    .markdownTableStyle(.github)
-                    .markdownBlockQuoteStyle(.github)
-                    .markdownCodeBlockStyle(
-                        .default(
-                            lightTheme: "xcode",
-                            darkTheme: "xcode-dark"
+                ScrollView {
+                    MarkdownText(document.content)
+                        .markdownTableStyle(.github)
+                        .markdownBlockQuoteStyle(.github)
+                        .markdownCodeBlockStyle(
+                            .default(
+                                lightTheme: "xcode",
+                                darkTheme: "xcode-dark"
+                            )
                         )
-                    )
+                }
 
                 Spacer()
             }
