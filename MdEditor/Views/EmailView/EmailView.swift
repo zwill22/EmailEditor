@@ -5,11 +5,16 @@
 //  Created by Zack Williams on 26-10-2026.
 //
 
+import SwiftData
 import SwiftUI
 
 struct EmailView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.openWindow) private var openWindow
+
+    @Query private var accounts: [EmailAccount]
+
+    @State private var selectedAccount: PersistentIdentifier? = nil
 
     @State var document: Document
 
@@ -21,7 +26,7 @@ struct EmailView: View {
 
     @State var provider = TemplateProvider()
 
-    @State private var selection: String = "Plain"
+    @State private var selectedTemplate: String? = nil
     @State private var error: EditorError?
     @State private var hasError = false
 
@@ -58,10 +63,9 @@ struct EmailView: View {
     func openPreview() {
         do {
             let htmlString = try buildEmail()
-            
+
             openWindow(id: "htmlPreview", value: htmlString)
 
-            
         } catch {
             self.error =
                 error as? EditorError
@@ -80,6 +84,10 @@ struct EmailView: View {
     }
 
     func buildEmail() throws -> String {
+        guard let selection = selectedTemplate else {
+            throw EditorError.invalidTemplateKey(key: "")
+        }
+
         guard let template = provider.get(name: selection) else {
             throw EditorError.missingTemplateKey(key: selection)
         }
@@ -124,7 +132,7 @@ struct EmailView: View {
     var templatePicker: some View {
         Picker(
             "Template",
-            selection: $selection
+            selection: $selectedTemplate
         ) {
             ForEach(provider.templates) { template in
                 Text(template.name).tag(template.name)
@@ -141,6 +149,13 @@ struct EmailView: View {
 
     var body: some View {
         Form {
+            Picker("Email account", selection: $selectedAccount) {
+                ForEach(accounts) { account in
+                    Text("\(account.name) - \(account.emailAddress)").tag(
+                        account.persistentModelID
+                    )
+                }
+            }.pickerStyle(.automatic)
 
             TextField("Subject", text: $title)
 
@@ -176,4 +191,5 @@ struct EmailView: View {
 
 #Preview {
     EmailView(document: .sample)
+        .sampleDataContainer()
 }

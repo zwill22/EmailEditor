@@ -10,12 +10,10 @@
 		CEA8334330A32BEB00375C14 /* MarkdownView in Frameworks */ = {isa = PBXBuildFile; productRef = CEA8334230A32BEB00375C14 /* MarkdownView */; };
 		CEA8334630A32C0200375C14 /* Ink in Frameworks */ = {isa = PBXBuildFile; productRef = CEA8334530A32C0200375C14 /* Ink */; };
 		CEA8334E30A34EFF00375C14 /* SwiftMail in Frameworks */ = {isa = PBXBuildFile; productRef = CEA8334D30A34EFF00375C14 /* SwiftMail */; };
-		CEA833C730A3BF3A00375C14 /* .env in Resources */ = {isa = PBXBuildFile; fileRef = CEA833C630A3BF3800375C14 /* .env */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		CE0808383089070A0065D9F3 /* MdEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MdEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		CEA833C630A3BF3800375C14 /* .env */ = {isa = PBXFileReference; lastKnownFileType = text; path = .env; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -54,7 +52,6 @@
 		CE08082F3089070A0065D9F3 = {
 			isa = PBXGroup;
 			children = (
-				CEA833C630A3BF3800375C14 /* .env */,
 				CE08083A3089070A0065D9F3 /* MdEditor */,
 				CE0808393089070A0065D9F3 /* Products */,
 			);
@@ -137,7 +134,6 @@
 		CE0808363089070A0065D9F3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
-				CEA833C730A3BF3A00375C14 /* .env in Resources */,
 			);
 		};
 /* End PBXResourcesBuildPhase section */
