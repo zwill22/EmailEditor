@@ -9,10 +9,13 @@
 /* Begin PBXBuildFile section */
 		CEA8334330A32BEB00375C14 /* MarkdownView in Frameworks */ = {isa = PBXBuildFile; productRef = CEA8334230A32BEB00375C14 /* MarkdownView */; };
 		CEA8334630A32C0200375C14 /* Ink in Frameworks */ = {isa = PBXBuildFile; productRef = CEA8334530A32C0200375C14 /* Ink */; };
+		CEA8334E30A34EFF00375C14 /* SwiftMail in Frameworks */ = {isa = PBXBuildFile; productRef = CEA8334D30A34EFF00375C14 /* SwiftMail */; };
+		CEA833C730A3BF3A00375C14 /* .env in Resources */ = {isa = PBXBuildFile; fileRef = CEA833C630A3BF3800375C14 /* .env */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		CE0808383089070A0065D9F3 /* MdEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MdEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEA833C630A3BF3800375C14 /* .env */ = {isa = PBXFileReference; lastKnownFileType = text; path = .env; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -42,6 +45,7 @@
 			files = (
 				CEA8334330A32BEB00375C14 /* MarkdownView in Frameworks */,
 				CEA8334630A32C0200375C14 /* Ink in Frameworks */,
+				CEA8334E30A34EFF00375C14 /* SwiftMail in Frameworks */,
 			);
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -50,6 +54,7 @@
 		CE08082F3089070A0065D9F3 = {
 			isa = PBXGroup;
 			children = (
+				CEA833C630A3BF3800375C14 /* .env */,
 				CE08083A3089070A0065D9F3 /* MdEditor */,
 				CE0808393089070A0065D9F3 /* Products */,
 			);
@@ -83,6 +88,7 @@
 			packageProductDependencies = (
 				CEA8334230A32BEB00375C14 /* MarkdownView */,
 				CEA8334530A32C0200375C14 /* Ink */,
+				CEA8334D30A34EFF00375C14 /* SwiftMail */,
 			);
 			productName = MdEditor;
 			productReference = CE0808383089070A0065D9F3 /* MdEditor.app */;
@@ -115,6 +121,7 @@
 			packageReferences = (
 				CEA8334130A32BEB00375C14 /* XCRemoteSwiftPackageReference "MarkdownView" */,
 				CEA8334430A32C0200375C14 /* XCRemoteSwiftPackageReference "Ink" */,
+				CEA8334C30A34EFF00375C14 /* XCRemoteSwiftPackageReference "SwiftMail" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = CE0808393089070A0065D9F3 /* Products */;
@@ -130,6 +137,7 @@
 		CE0808363089070A0065D9F3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
+				CEA833C730A3BF3A00375C14 /* .env in Resources */,
 			);
 		};
 /* End PBXResourcesBuildPhase section */
@@ -395,6 +403,14 @@
 				minimumVersion = 0.6.0;
 			};
 		};
+		CEA8334C30A34EFF00375C14 /* XCRemoteSwiftPackageReference "SwiftMail" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Cocoanetics/SwiftMail.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -407,6 +423,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CEA8334430A32C0200375C14 /* XCRemoteSwiftPackageReference "Ink" */;
 			productName = Ink;
+		};
+		CEA8334D30A34EFF00375C14 /* SwiftMail */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CEA8334C30A34EFF00375C14 /* XCRemoteSwiftPackageReference "SwiftMail" */;
+			productName = SwiftMail;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
