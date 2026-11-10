@@ -18,10 +18,10 @@ struct EditorApp: App {
                 .environment(dataContainer)
                 .modelContainer(dataContainer.modelContainer)
         }
-        .modelContainer(dataContainer.modelContainer)
         .windowResizability(.contentSize)
-        
-        WindowGroup("Preview Window", id: "htmlPreview", for: String.self) { $htmlString in
+
+        WindowGroup("Preview Window", id: "htmlPreview", for: String.self) {
+            $htmlString in
             HTMLView(html: htmlString ?? "")
         }
     }
