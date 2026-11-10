@@ -24,5 +24,13 @@ struct EditorApp: App {
             $htmlString in
             HTMLView(html: htmlString ?? "")
         }
+
+        Settings {
+            SettingsView()
+                .environment(dataContainer)
+                .modelContainer(dataContainer.modelContainer)
+
+        }
+        .windowIdealSize(.fitToContent)
     }
 }

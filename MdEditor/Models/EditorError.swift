@@ -10,6 +10,7 @@ import Foundation
 enum EditorError: Error {
     case fileEncodingError
     case invalidFilename
+    case invalidEmailAccount(name: String)
     case invalidTemplateKey(key: String)
     case missingTemplateKey(key: String)
     case unexpectedError(error: Error)
@@ -28,17 +29,22 @@ extension EditorError: LocalizedError {
                 "Invalid filename provided",
                 comment: ""
             )
-        case .invalidTemplateKey(key: let key):
+        case .invalidEmailAccount(let name):
+            return NSLocalizedString(
+                "Invalid configuration for account: \(name)",
+                comment: ""
+            )
+        case .invalidTemplateKey(let key):
             return NSLocalizedString(
                 "Invalid template key: \(key)",
                 comment: ""
             )
-        case .missingTemplateKey(key: let key):
+        case .missingTemplateKey(let key):
             return NSLocalizedString(
                 "No information provided for template key: \(key)",
                 comment: ""
             )
-        case .unexpectedError(error: let error):
+        case .unexpectedError(let error):
             return NSLocalizedString(
                 "Received unexpected error: \(error.localizedDescription)",
                 comment: ""
