@@ -8,9 +8,11 @@
 import Foundation
 import SwiftData
 
-func markdownToText(_ markdown: String) -> String {
-    guard let attributed = try? AttributedString(markdown: markdown) else {
-        return markdown
+func toText<StringType>(markdown: StringType) -> String
+where StringType: StringProtocol {
+    guard let attributed = try? AttributedString(markdown: String(markdown))
+    else {
+        return String(markdown)
     }
 
     // Extract raw string
@@ -29,14 +31,14 @@ class Document {
         let textRegex = Regex(pattern: ##"^([^#\n_>!`\*].+)$"##)
 
         if let groups = textRegex.extractFirst(inputString: content) {
-            return markdownToText(groups[0])
+            return toText(markdown: groups[0])
         }
 
         if let substring = content.split(
             maxSplits: 1,
             whereSeparator: \.isNewline
         ).first {
-            return markdownToText(String(substring))
+            return toText(markdown: substring)
         }
 
         return "Empty document"
@@ -46,12 +48,28 @@ class Document {
         let titleRegex = Regex(pattern: ##"^# (.+)$"##)
 
         if let groups = titleRegex.extractFirst(inputString: content) {
-            return markdownToText(groups[0])
+            return toText(markdown: groups[0])
         } else if !subject.isEmpty {
             return subject
         } else {
             return start
         }
+    }
+
+    func asHtml() -> String {
+        var generator = HtmlGenerator()
+
+        return generator.toHtml(markdown: content)
+    }
+
+    func getPreview(include: Bool, text: String) -> String {
+        let preview = include ? text : ""
+
+        if preview.isEmpty {
+            return self.start
+        }
+
+        return preview
     }
 
     init(

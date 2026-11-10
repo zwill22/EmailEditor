@@ -40,7 +40,9 @@ struct AddressEditor: View {
                     )
 
                     if index == addresses.count - 1 {
-                        addAddressButton
+                        addAddressButton.disabled(
+                            addresses[index].address.isEmpty
+                        )
                     } else {
                         removeAddressButton(index: index)
                     }

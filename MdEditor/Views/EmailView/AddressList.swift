@@ -30,7 +30,7 @@ struct AddressList: View {
         ForEach(addresses.indices, id: \.self) { index in
             HStack {
                 TextField(
-                    index == 0 ? "Sent to" : "",
+                    index == 0 ? "Sent" : "",
                     text: $addresses[index].address
                 )
                 .disabled(true)

@@ -9,17 +9,20 @@ import SwiftUI
 
 struct EmailView: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.openWindow) private var openWindow
 
     @State var document: Document
 
     @State var title = ""
+    @State var preview = ""
+    @State var includePreview = false
     @State var sendToMe = true
     @State var newAddresses: [Address] = [.init(address: "")]
 
     @State var provider = TemplateProvider()
 
     @State private var selection: String = "Plain"
-    @State private var error: TemplateError?
+    @State private var error: EditorError?
     @State private var hasError = false
 
     @ToolbarContentBuilder
@@ -33,9 +36,63 @@ struct EmailView: View {
         ToolbarItem(placement: .confirmationAction) {
             Button("Send", systemImage: "paperplane.fill") {
                 // Send message
-                dismiss()
+
+                do {
+                    let _ = try buildEmail()
+
+                    dismiss()
+                } catch {
+                    self.error =
+                        error as? EditorError
+                        ?? .unexpectedError(error: error)
+
+                    self.hasError = true
+                }
             }
+            .disabled(
+                title.isEmpty && newAddresses.allSatisfy({ $0.address.isEmpty })
+            )
         }
+    }
+
+    func openPreview() {
+        do {
+            let htmlString = try buildEmail()
+            
+            openWindow(id: "htmlPreview", value: htmlString)
+
+            
+        } catch {
+            self.error =
+                error as? EditorError
+                ?? .unexpectedError(error: error)
+
+            self.hasError = true
+        }
+    }
+
+    var previewButton: some View {
+        Button {
+            openPreview()
+        } label: {
+            Text("Preview")
+        }
+    }
+
+    func buildEmail() throws -> String {
+        guard let template = provider.get(name: selection) else {
+            throw EditorError.missingTemplateKey(key: selection)
+        }
+
+        return try template.fill(values: [
+            "content": document.asHtml(),
+            "title": title,
+            "previewText": document.getPreview(
+                include: includePreview,
+                text: preview
+            ),
+        ])
+
     }
 
     func fetchTemplates() {
@@ -43,9 +100,24 @@ struct EmailView: View {
             try provider.fetchTemplates()
         } catch {
             self.error =
-                error as? TemplateError ?? .unexpectedError(error: error)
+                error as? EditorError ?? .unexpectedError(error: error)
 
             self.hasError = true
+        }
+    }
+
+    var addressSelector: some View {
+        Section {
+            if !document.addresses.isEmpty {
+                Divider()
+
+                AddressList(addresses: $document.addresses)
+
+                Divider()
+            }
+
+            AddressEditor(addresses: $newAddresses)
+                .frame(minWidth: 0, maxWidth: .infinity)
         }
     }
 
@@ -60,35 +132,40 @@ struct EmailView: View {
         }
     }
 
-    var body: some View {
-        NavigationStack {
-            Form {
-                TextField("Subject", text: $title).font(.title2)
-
-                if !document.addresses.isEmpty {
-                    Divider()
-
-                    AddressList(addresses: $document.addresses)
-
-                    Divider()
-                }
-
-                AddressEditor(addresses: $newAddresses)
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .font(.title2)
-
-                Divider()
-
-                Toggle("Send to me", isOn: $sendToMe)
-
-                templatePicker.padding(.top)
-            }
-            .toolbar {
-                toolbarContent
-            }
-            .padding()
-            .alert(isPresented: $hasError, error: error) {}
+    var templateMenu: some View {
+        HStack {
+            templatePicker
+            previewButton
         }
+    }
+
+    var body: some View {
+        Form {
+
+            TextField("Subject", text: $title)
+
+            HStack {
+
+                TextField("Preview", text: $preview)
+                    .disabled(!includePreview)
+
+                Toggle("Include Preview", isOn: $includePreview).labelsHidden()
+                    .toggleStyle(.switch)
+            }
+
+            addressSelector
+
+            Divider()
+
+            Toggle("Send to me", isOn: $sendToMe)
+
+            templateMenu.padding(.top)
+        }
+        .toolbar {
+            toolbarContent
+        }
+        .padding()
+        .alert(isPresented: $hasError, error: error) {}
         .task {
             fetchTemplates()
         }

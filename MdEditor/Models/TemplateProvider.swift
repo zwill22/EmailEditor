@@ -30,4 +30,12 @@ class TemplateProvider {
         self.templates = emails
         self.initialised = true
     }
+
+    func get(name: String) -> Template? {
+        if let index = templates.firstIndex(where: { $0.name == name }) {
+            return templates[index]
+        }
+
+        return nil
+    }
 }

@@ -7,9 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CE080A42308A539E0065D9F3 /* MarkdownView in Frameworks */ = {isa = PBXBuildFile; productRef = CE080A41308A539E0065D9F3 /* MarkdownView */; };
-		CED6C73B3090A36000AE839C /* CodeEditorView in Frameworks */ = {isa = PBXBuildFile; productRef = CED6C73A3090A36000AE839C /* CodeEditorView */; };
-		CED6C73D3090A36000AE839C /* LanguageSupport in Frameworks */ = {isa = PBXBuildFile; productRef = CED6C73C3090A36000AE839C /* LanguageSupport */; };
+		CEA8334330A32BEB00375C14 /* MarkdownView in Frameworks */ = {isa = PBXBuildFile; productRef = CEA8334230A32BEB00375C14 /* MarkdownView */; };
+		CEA8334630A32C0200375C14 /* Ink in Frameworks */ = {isa = PBXBuildFile; productRef = CEA8334530A32C0200375C14 /* Ink */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,9 +40,8 @@
 		CE0808353089070A0065D9F3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
-				CE080A42308A539E0065D9F3 /* MarkdownView in Frameworks */,
-				CED6C73D3090A36000AE839C /* LanguageSupport in Frameworks */,
-				CED6C73B3090A36000AE839C /* CodeEditorView in Frameworks */,
+				CEA8334330A32BEB00375C14 /* MarkdownView in Frameworks */,
+				CEA8334630A32C0200375C14 /* Ink in Frameworks */,
 			);
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -83,9 +81,8 @@
 			);
 			name = MdEditor;
 			packageProductDependencies = (
-				CE080A41308A539E0065D9F3 /* MarkdownView */,
-				CED6C73A3090A36000AE839C /* CodeEditorView */,
-				CED6C73C3090A36000AE839C /* LanguageSupport */,
+				CEA8334230A32BEB00375C14 /* MarkdownView */,
+				CEA8334530A32C0200375C14 /* Ink */,
 			);
 			productName = MdEditor;
 			productReference = CE0808383089070A0065D9F3 /* MdEditor.app */;
@@ -116,8 +113,8 @@
 			mainGroup = CE08082F3089070A0065D9F3;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				CE080A40308A539E0065D9F3 /* XCRemoteSwiftPackageReference "MarkdownView" */,
-				CED6C7393090A36000AE839C /* XCRemoteSwiftPackageReference "CodeEditorView" */,
+				CEA8334130A32BEB00375C14 /* XCRemoteSwiftPackageReference "MarkdownView" */,
+				CEA8334430A32C0200375C14 /* XCRemoteSwiftPackageReference "Ink" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = CE0808393089070A0065D9F3 /* Products */;
@@ -278,7 +275,7 @@
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
-				ENABLE_OUTGOING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
 				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
@@ -322,7 +319,7 @@
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
-				ENABLE_OUTGOING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
 				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
@@ -376,7 +373,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		CE080A40308A539E0065D9F3 /* XCRemoteSwiftPackageReference "MarkdownView" */ = {
+		CEA8334130A32BEB00375C14 /* XCRemoteSwiftPackageReference "MarkdownView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/LiYanan2004/MarkdownView.git";
 			requirement = {
@@ -384,31 +381,26 @@
 				minimumVersion = 3.0.0;
 			};
 		};
-		CED6C7393090A36000AE839C /* XCRemoteSwiftPackageReference "CodeEditorView" */ = {
+		CEA8334430A32C0200375C14 /* XCRemoteSwiftPackageReference "Ink" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/mchakravarty/CodeEditorView";
+			repositoryURL = "https://github.com/JohnSundell/Ink.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.16.0;
+				minimumVersion = 0.6.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		CE080A41308A539E0065D9F3 /* MarkdownView */ = {
+		CEA8334230A32BEB00375C14 /* MarkdownView */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CE080A40308A539E0065D9F3 /* XCRemoteSwiftPackageReference "MarkdownView" */;
+			package = CEA8334130A32BEB00375C14 /* XCRemoteSwiftPackageReference "MarkdownView" */;
 			productName = MarkdownView;
 		};
-		CED6C73A3090A36000AE839C /* CodeEditorView */ = {
+		CEA8334530A32C0200375C14 /* Ink */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CED6C7393090A36000AE839C /* XCRemoteSwiftPackageReference "CodeEditorView" */;
-			productName = CodeEditorView;
-		};
-		CED6C73C3090A36000AE839C /* LanguageSupport */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CED6C7393090A36000AE839C /* XCRemoteSwiftPackageReference "CodeEditorView" */;
-			productName = LanguageSupport;
+			package = CEA8334430A32C0200375C14 /* XCRemoteSwiftPackageReference "Ink" */;
+			productName = Ink;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

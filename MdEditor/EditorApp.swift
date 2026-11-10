@@ -20,5 +20,9 @@ struct EditorApp: App {
         }
         .modelContainer(dataContainer.modelContainer)
         .windowResizability(.contentSize)
+        
+        WindowGroup("Preview Window", id: "htmlPreview", for: String.self) { $htmlString in
+            HTMLView(html: htmlString ?? "")
+        }
     }
 }
