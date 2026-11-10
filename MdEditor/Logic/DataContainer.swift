@@ -19,7 +19,8 @@ class DataContainer {
 
     init(includeSample: Bool = false) {
         let schema = Schema([
-            Document.self
+            Document.self,
+            EmailAccount.self
         ])
 
         let modelConfiguration = ModelConfiguration(
@@ -47,6 +48,11 @@ class DataContainer {
         for message in Document.sampleData {
             context.insert(message)
         }
+        
+        for account in EmailAccount.sampleData {
+            context.insert(account)
+        }
+
     }
 }
 
