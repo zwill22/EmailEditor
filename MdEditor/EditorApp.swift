@@ -31,6 +31,6 @@ struct EditorApp: App {
                 .modelContainer(dataContainer.modelContainer)
 
         }
-        .windowIdealSize(.fitToContent)
+        .windowResizability(.contentSize)
     }
 }

@@ -18,14 +18,12 @@ struct AccountRow: View {
             ValidityIndicator(
                 valid: $isValid,
                 loading: $isLoading
-            ).padding(.horizontal)
+            ).padding(.trailing)
             
             VStack(alignment: .leading) {
                 Text(account.name)
                 Text(account.emailAddress).italic()
             }
-            
-            Spacer()
         }
         .onAppear {
             Task {
@@ -33,7 +31,6 @@ struct AccountRow: View {
                 isLoading = false
             }
         }
-        .frame(maxWidth: 400)
     }
 }
 

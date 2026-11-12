@@ -13,8 +13,6 @@ struct ListView: View {
 
     @Binding var selection: Document?
 
-    @State private var showCreateDocument = false
-
     private var pathItems: some View {
         List(documents, id: \.self, selection: $selection) { document in
             ListItem(document: document)

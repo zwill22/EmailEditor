@@ -14,8 +14,8 @@ struct SettingsView: View {
                 AccountSettingsView()
             }
         }
-        .frame(minWidth: 400, minHeight: 200)
-        .scenePadding()
+        .frame(width: 600, height: 400)
+        .scenePadding(.vertical)
     }
 }
 
