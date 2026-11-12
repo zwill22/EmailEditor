@@ -13,6 +13,10 @@ class Address: Identifiable {
     var id: UUID
     var address: String
 
+    var isEmpty: Bool {
+        address.isEmpty
+    }
+    
     init(id: UUID = UUID(), address: String) {
         self.id = id
         self.address = address

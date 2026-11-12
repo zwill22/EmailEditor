@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct ValidityIndicator: View {
-    @Binding var valid: Bool
-    @Binding var loading: Bool
+    @Binding var emailAccount: EmailAccount
+
+    @State private var loading = true
+    @State private var valid = false
 
     var size: CGFloat = 40.0
     var fontSize: Font = .largeTitle
-    
+
     private var cornerRadius: CGFloat {
         size / 4.0
     }
@@ -41,25 +43,35 @@ struct ValidityIndicator: View {
             Image(systemName: "x.circle").font(fontSize)
         }
     }
+    
+    private func update() {
+        self.loading = true
+        
+        Task {
+            self.valid = await emailAccount.isValid()
+        }
+        
+        self.loading = false
+    }
 
     var body: some View {
-        if loading {
-            ProgressView()
-                .frame(width: size, height: size)
-        } else if valid {
-            greenTick
-        } else {
-            redCross
+        Group {
+            if loading {
+                ProgressView()
+                    .frame(width: size, height: size)
+            } else if valid {
+                greenTick
+            } else {
+                redCross
+            }
+        }.onAppear {
+            update()
         }
     }
 }
 
 #Preview {
-    HStack {
-        ValidityIndicator(valid: .constant(false), loading: .constant(true))
-        ValidityIndicator(valid: .constant(false), loading: .constant(false))
-
-        ValidityIndicator(valid: .constant(true), loading: .constant(true))
-        ValidityIndicator(valid: .constant(true), loading: .constant(false))
+    ForEach(EmailAccount.sampleData) { sample in
+        ValidityIndicator(emailAccount: .constant(sample))
     }
 }

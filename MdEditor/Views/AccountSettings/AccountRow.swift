@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AccountRow: View {
-    var account: EmailAccount
+    @Binding var account: EmailAccount
 
     @State private var isValid = false
     @State private var isLoading = true
@@ -16,13 +16,12 @@ struct AccountRow: View {
     var body: some View {
         HStack {
             ValidityIndicator(
-                valid: $isValid,
-                loading: $isLoading
+                emailAccount: $account
             ).padding(.trailing)
-            
+
             VStack(alignment: .leading) {
-                Text(account.name)
-                Text(account.emailAddress).italic()
+                Text(account.credentials.name)
+                Text(account.credentials.address.address).italic()
             }
         }
         .onAppear {
@@ -35,5 +34,5 @@ struct AccountRow: View {
 }
 
 #Preview {
-    AccountRow(account: EmailAccount.sample)
+    AccountRow(account: .constant(EmailAccount.sample))
 }

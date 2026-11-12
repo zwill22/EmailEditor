@@ -6,31 +6,18 @@
 //
 
 import Foundation
-import SwiftData
 
-@Model
-class EmailAccount {
-    var name: String
-    var host: String
-    var port: Int
-    var username: String
-    var emailAddress: String
-    var password: String
+class EmailAccount: Identifiable {
+    var credentials: EmailCredentials
 
-    var itemList: [String] {
-        [
-            name, host, "\(port)", username, emailAddress, password,
-        ]
-    }
+    private var mailServer: any MailServer
 
     var isEmpty: Bool {
-        self.name.isEmpty || self.host.isEmpty || self.username.isEmpty
-            || self.emailAddress.isEmpty || self.password.isEmpty
+        self.credentials.isEmpty
     }
 
     var allEmpty: Bool {
-        self.name.isEmpty && self.host.isEmpty && self.username.isEmpty
-            && self.emailAddress.isEmpty && self.password.isEmpty
+        self.credentials.allEmpty
     }
 
     func isValid() async -> Bool {
@@ -39,11 +26,7 @@ class EmailAccount {
         }
 
         do {
-            let server = try await MailServer(host: host, port: port)
-
-            try await server.login(username: username, password: password)
-
-            try await server.disconnect()
+            try await mailServer.validate(credentials: credentials)
 
             return true
         } catch {
@@ -52,32 +35,48 @@ class EmailAccount {
     }
 
     init(
-        name: String,
-        host: String,
-        port: Int,
-        username: String,
-        emailAddress: String,
-        password: String,
-
+        credentials: EmailCredentials,
+        server: any MailServer
     ) {
-        self.name = name
-        self.host = host
-        self.port = port
-        self.username = username
-        self.emailAddress = emailAddress
-        self.password = password
+        self.credentials = credentials
+
+        self.mailServer = server
+    }
+}
+
+extension EmailAccount: Hashable {
+    static func == (lhs: borrowing EmailAccount, rhs: borrowing EmailAccount)
+        -> Bool
+    {
+        lhs.credentials == rhs.credentials
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(credentials)
     }
 }
 
 extension EmailAccount {
-    static var emptyAccount: EmailAccount {
+    static var emptyAccount = EmailAccount(credentials: .empty, server: EMailServer())
+    
+    static var sample = sampleData[0]
+
+    static var sampleData: [EmailAccount] = [
         EmailAccount(
-            name: "",
-            host: "",
-            port: 0,
-            username: "",
-            emailAddress: "",
-            password: ""
-        )
-    }
+            credentials: .sampleData[0],
+            server: PreviewServer.valid
+        ),
+        EmailAccount(
+            credentials: .sampleData[1],
+            server: PreviewServer.invalidUser
+        ),
+        EmailAccount(
+            credentials: .sampleData[2],
+            server: PreviewServer.invalidServer
+        ),
+        EmailAccount(
+            credentials: .sampleData[3],
+            server: PreviewServer.valid
+        ),
+    ]
 }

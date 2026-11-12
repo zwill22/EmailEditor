@@ -8,40 +8,56 @@
 import SwiftMail
 
 @MainActor
-struct MailServer {
-    private var server: SMTPServer
-
-    func login(username: String, password: String) async throws {
-        try await server.login(username: username, password: password)
-    }
+protocol MailServer {
+    func validate(
+        credentials: EmailCredentials
+    ) async throws
 
     func send(
-        text: String,
-        email: String,
-        fromAddress: String,
-        addresses: [String],
-        subject: String
-    ) async throws {
-        let email = Email(
-            senderName: fromAddress,
-            senderAddress: fromAddress,
-            recipientNames: addresses,
-            recipientAddresses: addresses,
-            subject: subject,
-            textBody: text,
-            htmlBody: email
-        )
-        
-        try await server.sendEmail(email)
+        credentials: EmailCredentials,
+        emailDetails: EmailDetails
+    ) async throws
+}
+
+@MainActor
+class EMailServer: MailServer {
+    private func connect(
+        credentials: EmailCredentials
+    ) async throws -> SMTPServer {
+        let server = SMTPServer(host: credentials.host, port: credentials.port)
+
+        do {
+            try await server.connect()
+        } catch {
+            throw ServerError.unableToConnect(error: error)
+        }
+
+        do {
+            try await server.login(
+                username: credentials.username,
+                password: credentials.password
+            )
+        } catch {
+            throw ServerError.loginError(error: error)
+        }
+
+        return server
+
     }
 
-    func disconnect() async throws {
+    func validate(credentials: EmailCredentials) async throws {
+        let server = try await connect(credentials: credentials)
+
         try await server.disconnect()
     }
 
-    init(host: String, port: Int) async throws {
-        self.server = SMTPServer(host: host, port: port)
+    func send(credentials: EmailCredentials, emailDetails: EmailDetails) async throws
+    {
+        let server = try await connect(credentials: credentials)
 
-        try await server.connect()
+        let email = emailDetails.toEmail(credentials: credentials)
+
+        try await server.sendEmail(email)
     }
+
 }

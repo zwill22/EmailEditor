@@ -21,7 +21,7 @@ struct NewAccountView: View {
     @State private var checkingValidity = false
 
     var cancel = true
-    
+
     private func validate() {
         self.checkingValidity = true
         Task {
@@ -51,8 +51,8 @@ struct NewAccountView: View {
 
     var addButton: some View {
         Button("Add", systemImage: "checkmark") {
-            dataContainer.context.insert(newAccount)
-            
+            dataContainer.context.insert(newAccount.credentials)
+
             do {
                 try dataContainer.context.save()
                 if cancel {
@@ -73,8 +73,7 @@ struct NewAccountView: View {
 
             Text(valid ? "Valid" : "Invalid")
             ValidityIndicator(
-                valid: $valid,
-                loading: $checkingValidity,
+                emailAccount: $newAccount,
                 size: 24,
                 fontSize: .title2
             )
@@ -87,11 +86,11 @@ struct NewAccountView: View {
 
     var body: some View {
         VStack {
-            AccountEditView(emailAccount: $newAccount)
-                .onChange(of: newAccount.itemList) {
+            EditCredentialsView(credentials: $newAccount.credentials)
+                .onChange(of: newAccount.credentials.hashValue) {
                     validate()
                 }
-            
+
             newAccountMenu
         }
         .alert(isPresented: $hasError, error: error) {}

@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct AccountListView: View {
-    var accounts: [EmailAccount]
-
+    @Binding var accounts: [EmailAccount]
     @Binding var selection: EmailAccount?
 
     @ContentBuilder
@@ -24,7 +23,7 @@ struct AccountListView: View {
 
     var body: some View {
         NavigationStack {
-            List(accounts, id: \.self, selection: $selection) {
+            List($accounts, id: \.self, selection: $selection) {
                 account in
                 AccountRow(account: account)
             }
@@ -38,7 +37,7 @@ struct AccountListView: View {
 
 #Preview {
     AccountListView(
-        accounts: EmailAccount.sampleData,
+        accounts: .constant(EmailAccount.sampleData),
         selection: .constant(nil)
     )
 }

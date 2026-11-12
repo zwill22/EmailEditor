@@ -20,7 +20,7 @@ class DataContainer {
     init(includeSample: Bool = false) {
         let schema = Schema([
             Document.self,
-            EmailAccount.self
+            EmailCredentials.self
         ])
 
         let modelConfiguration = ModelConfiguration(
@@ -49,7 +49,7 @@ class DataContainer {
             context.insert(message)
         }
         
-        for account in EmailAccount.sampleData {
+        for account in EmailCredentials.sampleData {
             context.insert(account)
         }
 

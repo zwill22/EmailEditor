@@ -1,5 +1,5 @@
 //
-//  AddAccountView.swift
+//  EditCredentialsView.swift
 //  MdEditor
 //
 //  Created by Zack Williams on 10-11-2026.
@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct AccountEditView: View {
+struct EditCredentialsView: View {
     @Environment(\.dismiss) private var dismiss
 
-    @Binding var emailAccount: EmailAccount
+    @Binding var credentials: EmailCredentials
 
     let portFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -22,30 +22,30 @@ struct AccountEditView: View {
 
     var body: some View {
         Form {
-            TextField("Name", text: $emailAccount.name)
+            TextField("Name", text: $credentials.name)
             LabeledContent("Host") {
                 HStack {
-                    TextField("Host", text: $emailAccount.host)
+                    TextField("Host", text: $credentials.host)
 
                     Text("Port")
                     TextField(
                         "Port",
-                        value: $emailAccount.port,
+                        value: $credentials.port,
                         formatter: portFormatter
                     ).frame(maxWidth: 50)
                 }.labelsHidden()
             }
-            TextField("Username", text: $emailAccount.username)
+            TextField("Username", text: $credentials.username)
             TextField(
                 "Email Address",
-                text: $emailAccount.emailAddress,
+                text: $credentials.address.address,
             )
-            SecureField("Password", text: $emailAccount.password)
+            SecureField("Password", text: $credentials.password)
         }
         .padding(.vertical)
     }
 }
 
 #Preview {
-    AccountEditView(emailAccount: .constant(.sample))
+    EditCredentialsView(credentials: .constant(.sample))
 }

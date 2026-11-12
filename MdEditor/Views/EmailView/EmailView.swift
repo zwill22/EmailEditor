@@ -12,7 +12,7 @@ struct EmailView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.openWindow) private var openWindow
 
-    @Query private var accounts: [EmailAccount]
+    @Query private var credentials: [EmailCredentials]
 
     @State private var selectedAccount: PersistentIdentifier? = nil
 
@@ -133,8 +133,8 @@ struct EmailView: View {
 
     var accountPicker: some View {
         Picker("Email account", selection: $selectedAccount) {
-            ForEach(accounts) { account in
-                Text("\(account.name) - \(account.emailAddress)").tag(
+            ForEach(credentials) { account in
+                Text("\(account.name) - \(account.address.address)").tag(
                     account.persistentModelID
                 )
             }
