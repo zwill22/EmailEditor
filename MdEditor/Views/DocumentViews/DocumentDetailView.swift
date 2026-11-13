@@ -42,6 +42,14 @@ struct DocumentDetailView: View {
         }
     }
 
+    private var confirmDeleteButton: some View {
+        Button("Delete message", role: .destructive) {
+            dataContainer.context.delete(document)
+            try? dataContainer.context.save()
+            dismiss()
+        }
+    }
+
     private var deleteButton: some View {
         Button {
             showConfirmation = true
@@ -52,11 +60,7 @@ struct DocumentDetailView: View {
             "Delete message",
             isPresented: $showConfirmation
         ) {
-            Button("Delete message", role: .destructive) {
-                dataContainer.context.delete(document)
-                try? dataContainer.context.save()
-                dismiss()
-            }
+            confirmDeleteButton
         } message: {
             Text("The message will be permenently deleted")
         }

@@ -24,7 +24,7 @@ struct AccountSettingsView: View {
                 server: mailServer
             )
         })
-        
+
         self.selection = nil
     }
 
@@ -88,6 +88,9 @@ struct AccountSettingsView: View {
                 .navigationTitle("Account settings")
         }
         .onAppear {
+            refresh()
+        }
+        .onChange(of: credentials.count) {
             refresh()
         }
         .sheet(isPresented: $showNewAccountView) {
