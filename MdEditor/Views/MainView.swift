@@ -14,13 +14,14 @@ struct MainView: View {
     private var documents: [Document]
 
     @State private var selection: Document? = nil
-
+    @State private var visibility = NavigationSplitViewVisibility.automatic
+    
     var body: some View {
-        NavigationSplitView {
+        NavigationSplitView(columnVisibility: $visibility) {
             ListView(documents: documents, selection: $selection)
         } detail: {
             if let document = selection {
-                DetailView(document: document)
+                DocumentDetailView(document: document, visibility: $visibility)
             } else {
                 ContentUnavailableView(
                     "Select document",
@@ -28,7 +29,6 @@ struct MainView: View {
                 )
             }
         }
-
     }
 }
 

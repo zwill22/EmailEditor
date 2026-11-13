@@ -1,5 +1,5 @@
 //
-//  DetailView.swift
+//  DocumentDetailView.swift
 //  MdEditor
 //
 //  Created by Zack Williams on 21-10-2026.
@@ -8,20 +8,25 @@
 import SwiftData
 import SwiftUI
 
-struct DetailView: View {
+struct DocumentDetailView: View {
     var document: Document
 
+    @State private var editMode = false
     @State private var showConfirmation = false
     @State private var showSendMenu = false
-    
+
+    @Binding var visibility: NavigationSplitViewVisibility
+
     @Environment(\.dismiss) private var dismiss
     @Environment(DataContainer.self) private var dataContainer
 
     private var contentStack: some View {
         VStack(alignment: .leading) {
-            Text(document.timestamp
-                .formatted(date: .long, time: .shortened))
-                .font(.subheadline).padding(.bottom, 4)
+            Text(
+                document.timestamp
+                    .formatted(date: .long, time: .shortened)
+            )
+            .font(.subheadline).padding(.bottom, 4)
 
             DocumentView(document: document)
         }
@@ -30,8 +35,9 @@ struct DetailView: View {
     }
 
     private var editButton: some View {
-        NavigationLink {
-            EditView(document: document)
+        Button {
+            editMode = true
+            visibility = .detailOnly
         } label: {
             Image(systemName: "long.text.page.and.pencil")
         }
@@ -56,7 +62,7 @@ struct DetailView: View {
             Text("The message will be permenently deleted")
         }
     }
-    
+
     private var sendButton: some View {
         Button {
             showSendMenu = true
@@ -74,29 +80,37 @@ struct DetailView: View {
         ToolbarItem(placement: .destructiveAction) {
             deleteButton
         }
-        
+
         ToolbarItem(placement: .confirmationAction) {
             sendButton
         }
     }
 
     var body: some View {
-        ScrollView {
-            contentStack
-        }
-        .navigationTitle(document.subject)
-        .toolbar {
-            toolbarContent
-        }
-        .sheet(isPresented: $showSendMenu) {
-            EmailView(document: document)
+        NavigationStack {
+            ScrollView {
+                contentStack
+            }
+            .navigationTitle(document.subject)
+            .toolbar {
+                toolbarContent
+            }
+            .sheet(isPresented: $showSendMenu) {
+                EmailView(document: document)
+            }
+            
+            .navigationDestination(
+                isPresented: $editMode
+            ) {
+                EditView(document: document)
+            }
         }
     }
 }
 
 #Preview {
     NavigationStack {
-        DetailView(document: .sample)
+        DocumentDetailView(document: .sample, visibility: .constant(.automatic))
             .sampleDataContainer()
     }
 }
