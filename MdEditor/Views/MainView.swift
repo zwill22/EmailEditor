@@ -8,7 +8,7 @@
 import SwiftData
 import SwiftUI
 
-struct ContentView: View {
+struct MainView: View {
     @Query(sort: \Document.timestamp, order: .reverse)
 
     private var documents: [Document]
@@ -33,6 +33,6 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    MainView()
         .sampleDataContainer()
 }

@@ -14,7 +14,7 @@ struct EditorApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView()
                 .environment(dataContainer)
                 .modelContainer(dataContainer.modelContainer)
         }
