@@ -9,7 +9,26 @@ import MarkdownView
 import SwiftUI
 
 struct DocumentContentView: View {
+    @AppStorage("codeTheme") private var codeTheme: CodeTheme = .xcode
+    @AppStorage("blockQuoteTheme") private var blockQuoteTheme:
+        BlockQuoteTheme = .github
+
     var content: String
+
+    @ViewBuilder
+    var markdownTextView: some View {
+        AnyView(
+            MarkdownText(content)
+                .markdownTableStyle(.github)
+                .markdownBlockQuoteStyle(blockQuoteTheme.style)
+                .markdownCodeBlockStyle(
+                    .default(
+                        lightTheme: codeTheme.lightTheme,
+                        darkTheme: codeTheme.darkTheme
+                    )
+                )
+        )
+    }
 
     var body: some View {
         VStack {
@@ -25,15 +44,7 @@ struct DocumentContentView: View {
                 Spacer()
             } else {
                 ScrollView {
-                    MarkdownText(content)
-                        .markdownTableStyle(.github)
-                        .markdownBlockQuoteStyle(.github)
-                        .markdownCodeBlockStyle(
-                            .default(
-                                lightTheme: "xcode",
-                                darkTheme: "xcode-dark"
-                            )
-                        )
+                    markdownTextView
                 }
 
                 Spacer()
