@@ -5,14 +5,12 @@
 //  Created by Zack Williams on 21-10-2026.
 //
 
-import SwiftData
 import SwiftUI
 
 struct ListView: View {
     var documents: [Document]
 
     @Binding var selection: Document?
-
     private var pathItems: some View {
         List(documents, id: \.self, selection: $selection) { document in
             ListItem(document: document)
@@ -34,25 +32,11 @@ struct ListView: View {
         }
     }
 
-    @ToolbarContentBuilder
-    private var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .primaryAction) {
-            NavigationLink {
-                EditView()
-            } label: {
-                Image(systemName: "plus")
-            }
-        }
-    }
-
     var body: some View {
         NavigationStack {
             pathItems.frame(maxWidth: .infinity)
                 .overlay {
                     overlayContent
-                }
-                .toolbar {
-                    toolbarContent
                 }
                 .navigationTitle("Saved documents")
         }

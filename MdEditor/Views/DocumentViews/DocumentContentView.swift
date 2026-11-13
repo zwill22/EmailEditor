@@ -8,12 +8,12 @@
 import MarkdownView
 import SwiftUI
 
-struct DocumentView: View {
-    var document: Document
+struct DocumentContentView: View {
+    var content: String
 
     var body: some View {
         VStack {
-            if document.content.isEmpty {
+            if content.isEmpty {
                 Spacer()
 
                 ContentUnavailableView(
@@ -25,7 +25,7 @@ struct DocumentView: View {
                 Spacer()
             } else {
                 ScrollView {
-                    MarkdownText(document.content)
+                    MarkdownText(content)
                         .markdownTableStyle(.github)
                         .markdownBlockQuoteStyle(.github)
                         .markdownCodeBlockStyle(
@@ -45,19 +45,19 @@ struct DocumentView: View {
 }
 
 #Preview {
-    DocumentView(
-        document: .sample
+    DocumentContentView(
+        content: Document.sample.content
     )
 }
 
 #Preview("Code Preview") {
-    DocumentView(
-        document: .codeSample
+    DocumentContentView(
+        content: Document.codeSample.content
     )
 }
 
 #Preview("Quote Preview") {
-    DocumentView(
-        document: .sampleData[4]
+    DocumentContentView(
+        content: Document.sampleData[4].content
     )
 }

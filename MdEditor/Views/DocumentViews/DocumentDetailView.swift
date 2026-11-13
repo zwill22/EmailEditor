@@ -9,12 +9,11 @@ import SwiftData
 import SwiftUI
 
 struct DocumentDetailView: View {
-    var document: Document
-
     @State private var editMode = false
     @State private var showConfirmation = false
     @State private var showSendMenu = false
 
+    var document: Document
     @Binding var visibility: NavigationSplitViewVisibility
 
     @Environment(\.dismiss) private var dismiss
@@ -28,7 +27,7 @@ struct DocumentDetailView: View {
             )
             .font(.subheadline).padding(.bottom, 4)
 
-            DocumentView(document: document)
+            DocumentContentView(content: document.content)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding()
@@ -98,11 +97,14 @@ struct DocumentDetailView: View {
             .sheet(isPresented: $showSendMenu) {
                 EmailView(document: document)
             }
-            
+
             .navigationDestination(
                 isPresented: $editMode
             ) {
-                EditView(document: document)
+                EditDocumentView(document: document, editing: $editMode)
+                    .onDisappear {
+                        visibility = .all
+                    }
             }
         }
     }
@@ -110,7 +112,10 @@ struct DocumentDetailView: View {
 
 #Preview {
     NavigationStack {
-        DocumentDetailView(document: .sample, visibility: .constant(.automatic))
-            .sampleDataContainer()
+        DocumentDetailView(
+            document: .sample,
+            visibility: .constant(.automatic)
+        )
+        .sampleDataContainer()
     }
 }

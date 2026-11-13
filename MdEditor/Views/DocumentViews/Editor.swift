@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct Editor: View {
-    @Binding var document: Document
+    @Binding var content: String
 
     var body: some View {
-        TextEditor(text: $document.content)
+        TextEditor(text: $content)
             .multilineTextAlignment(.leading)
             .scrollContentBackground(.hidden)
             .foregroundColor(.primary)
@@ -25,5 +25,5 @@ struct Editor: View {
 }
 
 #Preview {
-    Editor(document: .constant(.sample))
+    Editor(content: .constant(Document.sample.content))
 }

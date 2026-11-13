@@ -71,6 +71,13 @@ class Document {
 
         return preview
     }
+    
+    func fill(with other: Document) {
+        self.content = other.content
+        self.addresses = other.addresses
+        self.subject = other.subject
+        self.timestamp = other.timestamp
+    }
 
     init(
         content: String = "",
