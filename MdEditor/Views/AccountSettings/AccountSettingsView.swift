@@ -13,34 +13,90 @@ struct AccountSettingsView: View {
 
     @State private var accounts: [EmailAccount] = []
     @State private var selection: EmailAccount? = nil
+    @State private var showNewAccountView: Bool = false
 
     var mailServer: any MailServer = EMailServer()
 
+    func refresh() {
+        self.accounts = credentials.map({ accountCredentials in
+            EmailAccount(
+                credentials: accountCredentials,
+                server: mailServer
+            )
+        })
+        
+        self.selection = nil
+    }
+
+    var refreshButton: some View {
+        Button {
+            refresh()
+        } label: {
+            Label("Refresh", systemImage: "arrow.clockwise")
+        }
+    }
+
+    var addButton: some View {
+        Button {
+            showNewAccountView = true
+        } label: {
+            Label("Add", systemImage: "plus.circle")
+        }
+    }
+
+    @ViewBuilder
+    var detailView: some View {
+        if let account = selection {
+            AccountDetailView(account: account)
+        } else {
+            ContentUnavailableView(
+                "No account selected",
+                systemImage: "mail.stack"
+            )
+        }
+    }
+
+    var splitView: some View {
+        HSplitView {
+            VStack {
+                AccountListView(
+                    accounts: $accounts,
+                    selection: $selection,
+                )
+
+                HStack {
+                    if !accounts.isEmpty {
+                        refreshButton.padding()
+                    }
+                    addButton.padding()
+                }
+            }
+
+            detailView
+                .frame(
+                    minWidth: 300,
+                    maxWidth: .infinity,
+                    maxHeight: .infinity
+                )
+                .padding(.horizontal)
+        }
+    }
+
     var body: some View {
         NavigationStack {
-            HSplitView {
-                AccountListView(accounts: $accounts, selection: $selection)
-
-                VStack {
-                    if let account = selection {
-                        AccountDetailView(account: account)
-                    } else {
-                        Text("Empty")
-                    }
-                }
-                .frame(minWidth: 300, maxWidth: .infinity, maxHeight: .infinity)
-                .padding(.horizontal)
-            }
-            .navigationTitle("Account settings")
+            splitView
+                .navigationTitle("Account settings")
         }
         .onAppear {
-            self.accounts = credentials.map({ accountCredentials in
-                EmailAccount(
-                    credentials: accountCredentials,
-                    server: mailServer
-                )
-            })
+            refresh()
         }
+        .sheet(isPresented: $showNewAccountView) {
+            showNewAccountView = false
+            refresh()
+        } content: {
+            NewAccountView().padding()
+        }
+
     }
 }
 

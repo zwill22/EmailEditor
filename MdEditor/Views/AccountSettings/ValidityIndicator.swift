@@ -19,6 +19,18 @@ struct ValidityIndicator: View {
     private var cornerRadius: CGFloat {
         size / 4.0
     }
+    
+    private var loadView: some View {
+        RoundedRectangle(
+            cornerRadius: cornerRadius,
+            style: .continuous
+        )
+        .fill(.secondary)
+        .frame(width: size, height: size)
+        .overlay {
+            ProgressView().font(fontSize)
+        }
+    }
 
     private var greenTick: some View {
         RoundedRectangle(
@@ -45,25 +57,26 @@ struct ValidityIndicator: View {
     }
     
     private func update() {
-        self.loading = true
-        
         Task {
+            self.loading = true
+            
             self.valid = await emailAccount.isValid()
+            
+            self.loading = false
         }
-        
-        self.loading = false
     }
 
     var body: some View {
         Group {
             if loading {
-                ProgressView()
-                    .frame(width: size, height: size)
+                loadView
             } else if valid {
                 greenTick
             } else {
                 redCross
             }
+        }.onChange(of: emailAccount.credentials.values) {
+            update()
         }.onAppear {
             update()
         }

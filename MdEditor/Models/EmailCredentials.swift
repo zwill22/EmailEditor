@@ -17,8 +17,8 @@ class EmailCredentials {
     var password: String
     var address: Address
 
-    var string: String {
-        "\(host)\(port)\(username)\(password)"
+    var values: [String] {
+        [name, host, "\(port)", username, password, address.address]
     }
 
     var isEmpty: Bool {

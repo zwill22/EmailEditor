@@ -18,21 +18,11 @@ struct NewAccountView: View {
     @State private var hasError = false
 
     @State private var valid = false
-    @State private var checkingValidity = false
-
-    var cancel = true
 
     private func validate() {
-        self.checkingValidity = true
         Task {
-            if newAccount.isEmpty {
-                self.valid = false
-            } else {
-                self.valid = await newAccount.isValid()
-            }
+            self.valid = await newAccount.isValid()
         }
-
-        self.checkingValidity = false
     }
 
     var resetButton: some View {
@@ -55,9 +45,8 @@ struct NewAccountView: View {
 
             do {
                 try dataContainer.context.save()
-                if cancel {
-                    dismiss()
-                }
+
+                dismiss()
             } catch {
                 // Don't dismiss
             }
@@ -71,15 +60,15 @@ struct NewAccountView: View {
             resetButton
             Spacer()
 
-            Text(valid ? "Valid" : "Invalid")
-            ValidityIndicator(
-                emailAccount: $newAccount,
-                size: 24,
-                fontSize: .title2
-            )
-            if cancel {
-                cancelButton
+            if !newAccount.isEmpty {
+                ValidityIndicator(
+                    emailAccount: $newAccount,
+                    size: 24,
+                    fontSize: .title2
+                )
             }
+
+            cancelButton
             addButton
         }
     }
@@ -87,7 +76,7 @@ struct NewAccountView: View {
     var body: some View {
         VStack {
             EditCredentialsView(credentials: $newAccount.credentials)
-                .onChange(of: newAccount.credentials.hashValue) {
+                .onChange(of: newAccount.credentials.values) {
                     validate()
                 }
 
@@ -102,5 +91,5 @@ struct NewAccountView: View {
 }
 
 #Preview("Without cancel button") {
-    NewAccountView(cancel: false).sampleDataContainer()
+    NewAccountView().sampleDataContainer()
 }

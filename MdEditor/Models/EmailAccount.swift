@@ -57,8 +57,13 @@ extension EmailAccount: Hashable {
 }
 
 extension EmailAccount {
-    static var emptyAccount = EmailAccount(credentials: .empty, server: EMailServer())
-    
+    static var emptyAccount: EmailAccount {
+        .init(
+            credentials: .empty,
+            server: EMailServer()
+        )
+    }
+
     static var sample = sampleData[0]
 
     static var sampleData: [EmailAccount] = [

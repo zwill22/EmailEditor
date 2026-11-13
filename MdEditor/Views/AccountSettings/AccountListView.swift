@@ -22,15 +22,13 @@ struct AccountListView: View {
     }
 
     var body: some View {
-        NavigationStack {
-            List($accounts, id: \.self, selection: $selection) {
-                account in
-                AccountRow(account: account)
-            }
-            .frame(minWidth: 240, maxHeight: .infinity)
-            .overlay {
-                overlayContent
-            }
+        List($accounts, id: \.self, selection: $selection) {
+            account in
+            AccountRow(account: account)
+        }
+        .frame(minWidth: 240, maxHeight: .infinity)
+        .overlay {
+            overlayContent
         }
     }
 }
