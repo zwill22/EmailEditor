@@ -14,16 +14,18 @@ struct MainView: View {
     private var documents: [Document]
 
     @State private var selection: Document? = nil
-
+    
+    @State private var showSidebar = true
     @State private var showNewDocumentView = false
     @State private var visibility: NavigationSplitViewVisibility = .all
 
     @ToolbarContentBuilder
     private var toolbarContent: some ToolbarContent {
-        if !showNewDocumentView {
+        if showSidebar {
             ToolbarItem {
                 Button {
                     showNewDocumentView = true
+                    showSidebar = false
                     visibility = .detailOnly
                 } label: {
                     Image(systemName: "plus")
@@ -37,21 +39,35 @@ struct MainView: View {
             ListView(
                 documents: documents,
                 selection: $selection,
-            ).toolbar {
+            )
+            .toolbar(removing: visibility == .detailOnly ? .sidebarToggle : nil)
+            .toolbar {
                 toolbarContent
             }
         } detail: {
             if showNewDocumentView {
                 NewDocumentView(showing: $showNewDocumentView).onDisappear {
-                    visibility = .all
+                    showSidebar = true
                 }
             } else if let document = selection {
-                DocumentDetailView(document: document, visibility: $visibility)
+                DocumentDetailView(
+                    document: document,
+                    showSidebar: $showSidebar,
+                )
             } else {
                 ContentUnavailableView(
                     "Select document",
                     systemImage: "exclamationmark.circle.fill"
                 )
+            }
+        }
+        .onChange(of: showSidebar) { oldValue, newValue in
+            if newValue == true {
+                visibility = .all
+            }
+            
+            if newValue == false {
+                visibility = .detailOnly
             }
         }
     }

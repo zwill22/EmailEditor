@@ -14,7 +14,7 @@ struct DocumentDetailView: View {
     @State private var showSendMenu = false
 
     var document: Document
-    @Binding var visibility: NavigationSplitViewVisibility
+    @Binding var showSidebar: Bool
 
     @Environment(\.dismiss) private var dismiss
     @Environment(DataContainer.self) private var dataContainer
@@ -36,7 +36,7 @@ struct DocumentDetailView: View {
     private var editButton: some View {
         Button {
             editMode = true
-            visibility = .detailOnly
+            showSidebar = false
         } label: {
             Image(systemName: "long.text.page.and.pencil")
         }
@@ -103,7 +103,7 @@ struct DocumentDetailView: View {
             ) {
                 EditDocumentView(document: document, editing: $editMode)
                     .onDisappear {
-                        visibility = .all
+                        showSidebar = true
                     }
             }
         }
@@ -114,7 +114,7 @@ struct DocumentDetailView: View {
     NavigationStack {
         DocumentDetailView(
             document: .sample,
-            visibility: .constant(.automatic)
+            showSidebar: .constant(false)
         )
         .sampleDataContainer()
     }
