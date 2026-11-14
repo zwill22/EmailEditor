@@ -38,7 +38,7 @@ struct DocumentDetailView: View {
             editMode = true
             showSidebar = false
         } label: {
-            Image(systemName: "long.text.page.and.pencil")
+            Label("Edit", systemImage: "pencil")
         }
     }
 

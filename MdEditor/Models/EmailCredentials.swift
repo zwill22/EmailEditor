@@ -59,4 +59,17 @@ extension EmailCredentials {
             address: ""
         )
     }
+
+    func update(other: EmailCredentials) {
+        self.name = other.name
+        self.host = other.host
+        self.address =
+            Address(address: other.address.address)
+        self.password =
+            other.password
+        self.port = other.port
+        self.username =
+            other.username
+        self.name = other.name
+    }
 }

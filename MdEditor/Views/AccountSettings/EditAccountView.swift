@@ -1,51 +1,85 @@
 //
-//  EditCredentialsView.swift
+//  EditAccountView.swift
 //  MdEditor
 //
-//  Created by Zack Williams on 10-11-2026.
+//  Created by Zack Williams on 14-11-2026.
 //
 
+import SwiftData
 import SwiftUI
 
-struct EditCredentialsView: View {
+struct EditAccountView: View {
+    var account: EmailAccount
+
+    @State private var valid = false
+    @State private var editedAccount: EmailAccount = .emptyAccount
+
     @Environment(\.dismiss) private var dismiss
+    @Environment(DataContainer.self) private var dataContainer
 
-    @Binding var credentials: EmailCredentials
+    private func validate() {
+        Task {
+            self.valid = await editedAccount.isValid()
+        }
+    }
 
-    let portFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .none
-        formatter.minimumIntegerDigits = 3
-        formatter.maximumIntegerDigits = 3
-        return formatter
-    }()
+    private func dismissFn() {
+        dismiss()
+    }
+
+    private func unchanged() -> Bool {
+        return
+            editedAccount.credentials.values == account.credentials.values
+
+    }
+
+    private func updateFn() throws {
+        account.credentials.update(other: editedAccount.credentials)
+
+        dataContainer.context.insert(account.credentials)
+
+        try dataContainer.context.save()
+    }
+
+    private func disableSave() -> Bool {
+        return !valid || unchanged()
+    }
+
+    var toolbarContent: some ToolbarContent {
+        EditingToolbar(
+            dismiss: dismissFn,
+            unchanged: unchanged,
+            update: updateFn,
+            disableSaveButton: disableSave
+        )
+    }
+
+    var validityChecker: some View {
+        HStack {
+            Text(editedAccount.credentials.name).font(.title)
+            ValidityIndicator(emailAccount: $editedAccount)
+        }
+    }
 
     var body: some View {
-        Form {
-            TextField("Name", text: $credentials.name)
-            LabeledContent("Host") {
-                HStack {
-                    TextField("Host", text: $credentials.host)
-
-                    Text("Port")
-                    TextField(
-                        "Port",
-                        value: $credentials.port,
-                        formatter: portFormatter
-                    ).frame(maxWidth: 50)
-                }.labelsHidden()
-            }
-            TextField("Username", text: $credentials.username)
-            TextField(
-                "Email Address",
-                text: $credentials.address.address,
-            )
-            SecureField("Password", text: $credentials.password)
+        NavigationStack {
+            validityChecker
+            Spacer()
+            EditCredentialsView(credentials: $editedAccount.credentials)
+                .onAppear {
+                    editedAccount.credentials.update(other: account.credentials)
+                }
+                .onChange(of: editedAccount.credentials.values) {
+                    validate()
+                }
+                .toolbar {
+                    toolbarContent
+                }
         }
-        .padding(.vertical)
+        .padding()
     }
 }
 
 #Preview {
-    EditCredentialsView(credentials: .constant(.sample))
+    EditAccountView(account: EmailAccount.sample)
 }

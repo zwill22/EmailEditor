@@ -14,6 +14,7 @@ struct AccountDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(DataContainer.self) private var dataContainer
 
+    @State private var editMode = false
     @State private var showDeleteConfirmation = false
 
     var confirmDeleteButton: some View {
@@ -44,7 +45,7 @@ struct AccountDetailView: View {
 
     var editButton: some View {
         Button {
-            //
+            editMode = true
         } label: {
             Label("Edit", systemImage: "pencil")
         }
@@ -62,6 +63,9 @@ struct AccountDetailView: View {
                     Spacer()
                     editButton
                 }
+            }
+            .sheet(isPresented: $editMode) {
+                EditAccountView(account: account)
             }
             .frame(maxWidth: 400)
         }

@@ -14,80 +14,29 @@ struct EditDocumentView: View {
     @Binding var editing: Bool
 
     @State private var content: String = ""
-    @State private var showSaveConfirmation = false
-    @State private var showCancelConfirmation = false
 
     @Environment(DataContainer.self) private var dataContainer
 
-    var discardButton: some View {
-        Button("Discard Changes", role: .destructive) {
-            editing = false
-        }
+    private func update() throws {
+        document.content = content
+        document.timestamp = .now
+
+        dataContainer.context.insert(document)
+
+        try dataContainer.context.save()
+
     }
 
-    var cancelButton: some View {
-        Button {
-            if content == document.content {
-                editing = false
-            } else {
-                showCancelConfirmation = true
-            }
-        } label: {
-            Label("Cancel", systemImage: "xmark")
-        }
-        .confirmationDialog(
-            "Discard changes",
-            isPresented: $showCancelConfirmation
-        ) {
-            discardButton
-        }
+    private func unchanged() -> Bool {
+        return content == document.content
     }
 
-    var saveAndExitButton: some View {
-        Button("Save", role: .confirm) {
-            document.content = content
-            document.timestamp = .now
-
-            dataContainer.context.insert(document)
-
-            do {
-                try dataContainer.context.save()
-
-                editing = false
-            } catch {
-                //
-            }
-        }
+    private func dismiss() {
+        editing = false
     }
 
-    var saveButton: some View {
-        Button {
-            if content == document.content {
-                editing = false
-            } else {
-                showSaveConfirmation = true
-            }
-        } label: {
-            Label("Save", systemImage: "checkmark")
-        }
-        .confirmationDialog(
-            "Save changes",
-            isPresented: $showSaveConfirmation
-        ) {
-            saveAndExitButton
-        }
-        .disabled(content == document.content)
-    }
-
-    @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .destructiveAction) {
-            cancelButton
-        }
-
-        ToolbarItem(placement: .confirmationAction) {
-            saveButton
-        }
+        EditingToolbar(dismiss: dismiss, unchanged: unchanged, update: update)
     }
 
     var body: some View {
