@@ -13,34 +13,30 @@ extension EmailCredentials {
             name: "AOL",
             host: "smtp.aol.com",
             port: 587,
-            username: "myAOLUsername",
+            emailAddress: "myAOLUsername@aol.com",
             password: "Password",
-            address: "me@aol.com",
         ),
         EmailCredentials(
             name: "GMail",
             host: "smtp.gmail.com",
             port: 465,
-            username: "myGoogleAccount",
+            emailAddress: "myGoogleName@gmail.com",
             password: "GoogleAppPassword",
-            address: "me@gmail.com",
         ),
         EmailCredentials(
             name: "iCloud",
             host: "smtp.mail.me.com",
             port: 587,
-            username: "myAppleUsername",
+            emailAddress: "myAppleUsername@icloud.com",
             password: "icloudAppPassword",
-            address: "me@icloud.com",
 
         ),
         EmailCredentials(
             name: "Office365",
             host: "smtp.office365.com",
             port: 587,
-            username: "microsoftOfficeAccount",
+            emailAddress: "microsoftOfficeAccount@office365.com",
             password: "officePassword",
-            address: "me@office365.com",
         ),
     ]
 }

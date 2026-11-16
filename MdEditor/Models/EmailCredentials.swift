@@ -13,38 +13,35 @@ class EmailCredentials {
     var name: String
     var host: String
     var port: Int
-    var username: String
+    var emailAddress: Address
     var password: String
-    var address: Address
 
     var values: [String] {
-        [name, host, "\(port)", username, password, address.address]
+        [name, host, "\(port)", password, emailAddress.address]
     }
 
     var isEmpty: Bool {
-        self.name.isEmpty || self.host.isEmpty || self.username.isEmpty
-            || self.password.isEmpty || self.address.isEmpty
+        self.name.isEmpty || self.host.isEmpty
+            || self.password.isEmpty || self.emailAddress.isEmpty
     }
 
     var allEmpty: Bool {
-        self.name.isEmpty && self.host.isEmpty && self.username.isEmpty
-            && self.password.isEmpty && self.address.isEmpty
+        self.name.isEmpty && self.host.isEmpty
+            && self.password.isEmpty && self.emailAddress.isEmpty
     }
 
     init(
         name: String,
         host: String,
         port: Int,
-        username: String,
-        password: String,
-        address: String
+        emailAddress: String,
+        password: String
     ) {
         self.name = name
         self.host = host
         self.port = port
-        self.username = username
+        self.emailAddress = Address(address: emailAddress)
         self.password = password
-        self.address = Address(address: address)
     }
 }
 
@@ -54,22 +51,20 @@ extension EmailCredentials {
             name: "",
             host: "",
             port: 0,
-            username: "",
+            emailAddress: "",
             password: "",
-            address: ""
         )
     }
 
     func update(other: EmailCredentials) {
         self.name = other.name
         self.host = other.host
-        self.address =
-            Address(address: other.address.address)
+        self.emailAddress =
+            Address(address: other.emailAddress.address)
         self.password =
             other.password
         self.port = other.port
-        self.username =
-            other.username
+
         self.name = other.name
     }
 }

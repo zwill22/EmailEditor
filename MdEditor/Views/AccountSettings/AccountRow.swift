@@ -21,7 +21,7 @@ struct AccountRow: View {
 
             VStack(alignment: .leading) {
                 Text(account.credentials.name)
-                Text(account.credentials.address.address).italic()
+                Text(account.credentials.emailAddress.address).italic()
             }
         }
         .onAppear {

@@ -134,7 +134,7 @@ struct EmailView: View {
     var accountPicker: some View {
         Picker("Email account", selection: $selectedAccount) {
             ForEach(credentials) { account in
-                Text("\(account.name) - \(account.address.address)").tag(
+                Text("\(account.name) - \(account.emailAddress.address)").tag(
                     account.persistentModelID
                 )
             }

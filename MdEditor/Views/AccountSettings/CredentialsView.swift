@@ -10,12 +10,17 @@ import SwiftUI
 struct CredentialsView: View {
     var credentials: EmailCredentials
 
+    // Display password as 6-12 dots
+    func dots() -> Int {
+        return min(max(6, credentials.password.count), 12)
+    }
+
     var body: some View {
 
         Label(" \(credentials.name)", systemImage: "mail.stack").font(
             .title
         )
-        
+
         Section(header: Text("Host details")) {
             HStack {
                 Label("Hostname", systemImage: "server.rack")
@@ -32,15 +37,9 @@ struct CredentialsView: View {
 
         Section(header: Text("Account Details")) {
             HStack {
-                Label("Username", systemImage: "person")
-                Spacer()
-                Text(credentials.username)
-            }
-
-            HStack {
                 Label("Email Address", systemImage: "at")
                 Spacer()
-                Text(credentials.address.address)
+                Text(credentials.emailAddress.address)
             }
 
             HStack {
@@ -49,7 +48,7 @@ struct CredentialsView: View {
                 Text(
                     String(
                         repeating: "\u{2022}",
-                        count: min(credentials.password.count, 12)
+                        count: dots()
                     )
                 )
             }

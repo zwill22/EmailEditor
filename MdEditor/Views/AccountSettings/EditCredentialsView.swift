@@ -33,10 +33,9 @@ struct EditCredentialsView: View {
                     ).frame(maxWidth: 50)
                 }.labelsHidden()
             }
-            TextField("Username", text: $credentials.username)
             TextField(
                 "Email Address",
-                text: $credentials.address.address,
+                text: $credentials.emailAddress.address,
             )
             SecureField("Password", text: $credentials.password)
         }

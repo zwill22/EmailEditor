@@ -15,8 +15,8 @@ struct EmailDetails {
 
     func toEmail(credentials: EmailCredentials) -> Email {
         return Email(
-            senderName: credentials.address.address,
-            senderAddress: credentials.address.address,
+            senderName: credentials.emailAddress.address,
+            senderAddress: credentials.emailAddress.address,
             recipientNames: addresses,
             recipientAddresses: addresses,
             subject: subject,

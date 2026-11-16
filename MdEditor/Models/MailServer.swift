@@ -34,7 +34,7 @@ class EMailServer: MailServer {
 
         do {
             try await server.login(
-                username: credentials.username,
+                username: credentials.emailAddress.address,
                 password: credentials.password
             )
         } catch {
