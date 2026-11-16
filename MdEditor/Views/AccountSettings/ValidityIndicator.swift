@@ -19,7 +19,7 @@ struct ValidityIndicator: View {
     private var cornerRadius: CGFloat {
         size / 4.0
     }
-    
+
     private var loadView: some View {
         RoundedRectangle(
             cornerRadius: cornerRadius,
@@ -28,7 +28,8 @@ struct ValidityIndicator: View {
         .fill(.secondary)
         .frame(width: size, height: size)
         .overlay {
-            ProgressView().font(fontSize)
+            ProgressView().progressViewStyle(.circular)
+                .controlSize(size < 30 ? .small : .regular)
         }
     }
 
@@ -55,13 +56,13 @@ struct ValidityIndicator: View {
             Image(systemName: "x.circle").font(fontSize)
         }
     }
-    
+
     private func update() {
         Task {
             self.loading = true
-            
+
             self.valid = await emailAccount.isValid()
-            
+
             self.loading = false
         }
     }
@@ -85,6 +86,10 @@ struct ValidityIndicator: View {
 
 #Preview {
     ForEach(EmailAccount.sampleData) { sample in
-        ValidityIndicator(emailAccount: .constant(sample))
+        ValidityIndicator(
+            emailAccount: .constant(sample),
+            size: 24.0,
+            fontSize: .title2
+        )
     }
 }
