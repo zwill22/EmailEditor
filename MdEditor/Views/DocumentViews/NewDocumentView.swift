@@ -10,7 +10,7 @@ import SwiftUI
 
 struct NewDocumentView: View {
     @Binding var showing: Bool
-    
+
     @State private var newDocument: MarkdownDocument = .init()
     @State private var showCancelConfirmation = false
 
@@ -67,13 +67,17 @@ struct NewDocumentView: View {
 
     var body: some View {
         NavigationStack {
-            ContentEditView(content: $newDocument.content)
-                .toolbar {
-                    toolbarContent
-                }
-                .navigationTitle("Add new document")
-        }
+            ContentEditView(
+                content: $newDocument.content,
+                location: $newDocument.location
+            )
+            .toolbar {
+                toolbarContent
+            }
+            .navigationTitle("Add new document")
 
+        }
+        }
     }
 }
 

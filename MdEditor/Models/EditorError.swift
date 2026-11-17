@@ -9,45 +9,52 @@ import Foundation
 
 enum EditorError: Error {
     case fileEncodingError
+    case fileReadError(filename: String)
+    case fileWriteError(error: Error)
     case invalidFilename
     case invalidEmailAccount(name: String)
     case invalidTemplateKey(key: String)
     case missingTemplateKey(key: String)
+    case noFileLocation
     case unexpectedError(error: Error)
 }
 
-extension EditorError: LocalizedError {
+extension EditorError: LocalisedError {
     var errorDescription: String? {
         switch self {
         case .fileEncodingError:
-            return NSLocalizedString(
-                "Unable to decode file data with UTF-8 encoding",
-                comment: ""
+            return localisedString(
+                "Unable to decode file data with UTF-8 encoding"
+            )
+        case .fileReadError(let filename):
+            return localisedString(
+                "Unable to read file \(filename)"
+            )
+        case .fileWriteError(let error):
+            return localisedString(
+                "Unable to write file: \(error.localisedDescription)"
             )
         case .invalidFilename:
-            return NSLocalizedString(
-                "Invalid filename provided",
-                comment: ""
+            return localisedString(
+                "Invalid filename provided"
             )
         case .invalidEmailAccount(let name):
-            return NSLocalizedString(
-                "Invalid configuration for account: \(name)",
-                comment: ""
+            return localisedString(
+                "Invalid configuration for account: \(name)"
             )
         case .invalidTemplateKey(let key):
-            return NSLocalizedString(
-                "Invalid template key: \(key)",
-                comment: ""
+            return localisedString(
+                "Invalid template key: \(key)"
             )
         case .missingTemplateKey(let key):
-            return NSLocalizedString(
-                "No information provided for template key: \(key)",
-                comment: ""
+            return localisedString(
+                "No information provided for template key: \(key)"
             )
+        case .noFileLocation:
+            return localisedString("No file location specified")
         case .unexpectedError(let error):
-            return NSLocalizedString(
-                "Received unexpected error: \(error.localizedDescription)",
-                comment: ""
+            return localisedString(
+                "Received unexpected error: \(error.localisedDescription)"
             )
         }
     }

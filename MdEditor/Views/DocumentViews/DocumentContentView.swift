@@ -8,17 +8,54 @@
 import MarkdownView
 import SwiftUI
 
+struct RelativeLocalImageRenderer: MarkdownImageRenderer {
+    private func FallbackView(configuration: Configuration) -> some View {
+        Rectangle().fill(.fill).frame(width: 400, height: 300)
+            .overlay {
+                ContentUnavailableView(
+                    configuration.url.absoluteString.split(separator: "//")
+                        .last!,
+                    systemImage: "photo.artframe.circle",
+                    description: Text(configuration.alternativeText ?? "")
+                )
+            }
+    }
+
+    func makeBody(configuration: Configuration) -> some View {
+        FallbackView(configuration: configuration)
+    }
+}
+
 struct DocumentContentView: View {
     @AppStorage("codeTheme") private var codeTheme: CodeTheme = .xcode
     @AppStorage("blockQuoteTheme") private var blockQuoteTheme:
         BlockQuoteTheme = .github
 
+    private var regex = Regex(
+        pattern:
+            "!\\[(.*)\\]\\(((?:\\.{1,2}\\/)?(?:[\\w.-]+\\/)*[\\w.-]+)"
+    )
+
+    private var renderer = RelativeLocalImageRenderer()
+
     var content: String
+    var path: String?
+
+    var markdownView: some View {
+        let pathString = URL(filePath: path ?? "").standardized.path()
+        
+        return MarkdownText(
+            regex.replace(
+                inputString: content,
+                substitutionString: "![$1](relativePath://\(pathString)$2"
+            )
+        )
+    }
 
     @ViewBuilder
     var markdownTextView: some View {
         AnyView(
-            MarkdownText(content)
+            markdownView
                 .markdownTableStyle(.github)
                 .markdownBlockQuoteStyle(blockQuoteTheme.style)
                 .markdownCodeBlockStyle(
@@ -26,6 +63,9 @@ struct DocumentContentView: View {
                         lightTheme: codeTheme.lightTheme,
                         darkTheme: codeTheme.darkTheme
                     )
+                )
+                .markdownElementRenderer(
+                    .image(renderer, urlScheme: "relativePath")
                 )
         )
     }

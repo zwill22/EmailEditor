@@ -14,7 +14,7 @@ struct EditDocumentView: View {
     @Binding var editing: Bool
 
     @State private var content: String = ""
-
+    @State private var location: URL? = nil
     @Environment(DataContainer.self) private var dataContainer
 
     private func update() throws {
@@ -41,9 +41,10 @@ struct EditDocumentView: View {
 
     var body: some View {
         NavigationStack {
-            ContentEditView(content: $content)
+            ContentEditView(content: $content, location: $location)
                 .onAppear {
                     content = document.content
+                    location = document.location
                 }
                 .navigationBarBackButtonHidden()
                 .navigationTitle("Editing Document")

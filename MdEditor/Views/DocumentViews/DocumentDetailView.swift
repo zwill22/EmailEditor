@@ -27,7 +27,10 @@ struct DocumentDetailView: View {
             )
             .font(.subheadline).padding(.bottom, 4)
 
-            DocumentContentView(content: document.content)
+            DocumentContentView(
+                content: document.content,
+                path: document.location?.path()
+            )
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding()

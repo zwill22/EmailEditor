@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ContentEditView: View {
     @Binding var content: String
+    @Binding var location: URL?
 
     var body: some View {
 
@@ -18,7 +19,7 @@ struct ContentEditView: View {
 
             Divider()
 
-            DocumentContentView(content: content)
+            DocumentContentView(content: content, path: location?.path())
         }
         .scrollDismissesKeyboard(.interactively)
     }
@@ -27,5 +28,6 @@ struct ContentEditView: View {
 #Preview {
     ContentEditView(
         content: .constant(MarkdownDocument.codeSample.content),
+        location: .constant(nil)
     )
 }
