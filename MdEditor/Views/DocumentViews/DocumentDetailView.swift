@@ -10,14 +10,10 @@ import SwiftUI
 
 struct DocumentDetailView: View {
     @State private var editMode = false
-    @State private var showConfirmation = false
     @State private var showSendMenu = false
 
     var document: MarkdownDocument
     @Binding var showSidebar: Bool
-
-    @Environment(\.dismiss) private var dismiss
-    @Environment(DataContainer.self) private var dataContainer
 
     private var contentStack: some View {
         VStack(alignment: .leading) {
@@ -36,60 +32,13 @@ struct DocumentDetailView: View {
         .padding()
     }
 
-    private var editButton: some View {
-        Button {
-            editMode = true
-            showSidebar = false
-        } label: {
-            Label("Edit", systemImage: "pencil")
-        }
-    }
-
-    private var confirmDeleteButton: some View {
-        Button("Delete message", role: .destructive) {
-            dataContainer.context.delete(document)
-            try? dataContainer.context.save()
-            dismiss()
-        }
-    }
-
-    private var deleteButton: some View {
-        Button {
-            showConfirmation = true
-        } label: {
-            Image(systemName: "trash")
-        }
-        .confirmationDialog(
-            "Delete message",
-            isPresented: $showConfirmation
-        ) {
-            confirmDeleteButton
-        } message: {
-            Text("The message will be permenently deleted")
-        }
-    }
-
-    private var sendButton: some View {
-        Button {
-            showSendMenu = true
-        } label: {
-            Image(systemName: "paperplane.fill")
-        }
-    }
-
-    @ToolbarContentBuilder
     private var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .automatic) {
-            editButton
-        }
-
-        ToolbarItem(placement: .destructiveAction) {
-            deleteButton
-        }
-
-        ToolbarItem(placement: .confirmationAction) {
-            sendButton
-        }
+        DocumentDetailToolbar(
+            document: document,
+            editMode: $editMode,
+            showSidebar: $showSidebar,
+            showSendMenu: $showSendMenu
+        )
     }
 
     var body: some View {

@@ -14,6 +14,8 @@ struct EditAccountView: View {
     @State private var valid = false
     @State private var editedAccount: EmailAccount = .emptyAccount
 
+    @State private var errorHandler: ErrorHandler = .init()
+
     @Environment(\.dismiss) private var dismiss
     @Environment(DataContainer.self) private var dataContainer
 
@@ -50,7 +52,8 @@ struct EditAccountView: View {
             dismiss: dismissFn,
             unchanged: unchanged,
             update: updateFn,
-            disableSaveButton: disableSave
+            disableSaveButton: disableSave,
+            errorHandler: $errorHandler
         )
     }
 

@@ -10,33 +10,21 @@ import SwiftUI
 
 struct EditDocumentView: View {
     var document: MarkdownDocument
-
     @Binding var editing: Bool
 
     @State private var content: String = ""
     @State private var location: URL? = nil
-    @Environment(DataContainer.self) private var dataContainer
 
-    private func update() throws {
-        document.content = content
-        document.timestamp = .now
-
-        dataContainer.context.insert(document)
-
-        try dataContainer.context.save()
-
-    }
-
-    private func unchanged() -> Bool {
-        return content == document.content
-    }
-
-    private func dismiss() {
-        editing = false
-    }
+    @State private var errorHandler: ErrorHandler = .init()
 
     var toolbarContent: some ToolbarContent {
-        EditingToolbar(dismiss: dismiss, unchanged: unchanged, update: update)
+        EditDocumentToolbar(
+            document: document,
+            editing: $editing,
+            content: $content,
+            location: $location,
+            errorHandler: $errorHandler
+        )
     }
 
     var body: some View {
