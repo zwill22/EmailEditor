@@ -7,13 +7,13 @@
 
 import Foundation
 
-extension Document {
+extension MarkdownDocument {
     static let sample = sampleData[0]
 
     static let codeSample = sampleData[8]
 
     static let sampleData = [
-        Document(
+        MarkdownDocument(
             content: """
                 # Quick note
 
@@ -26,7 +26,7 @@ extension Document {
             subject: "Quick",
         ),
 
-        Document(
+        MarkdownDocument(
             content: """
                 # Notice of chaos
 
@@ -40,7 +40,7 @@ extension Document {
             timestamp: .now.addingTimeInterval(-86400)
         ),
 
-        Document(
+        MarkdownDocument(
             content: """
                 # Some nice code
 
@@ -61,7 +61,7 @@ extension Document {
             timestamp: .now.addingTimeInterval(-86400 * 2)
         ),
 
-        Document(
+        MarkdownDocument(
             content: """
                 # Notice 
 
@@ -74,7 +74,7 @@ extension Document {
             subject: "Sad",
             timestamp: .now.addingTimeInterval(-86400 * 3)
         ),
-        Document(
+        MarkdownDocument(
             content: """
                 # Rings
 
@@ -93,7 +93,7 @@ extension Document {
             subject: "Rings",
             timestamp: .now.addingTimeInterval(-86400 * 4)
         ),
-        Document(
+        MarkdownDocument(
             content: """
                 # Syniad Gwych
 
@@ -104,7 +104,7 @@ extension Document {
             subject: "Syniad",
             timestamp: .now.addingTimeInterval(-86400 * 5)
         ),
-        Document(
+        MarkdownDocument(
             content: """
                 # Ideas for new apps
 
@@ -116,7 +116,7 @@ extension Document {
                 """,
             timestamp: .now.addingTimeInterval(-86400 * 6)
         ),
-        Document(
+        MarkdownDocument(
             content: """
                 # No try
 
@@ -127,7 +127,7 @@ extension Document {
             subject: "No try",
             timestamp: .now.addingTimeInterval(-86400 * 7)
         ),
-        Document(
+        MarkdownDocument(
             content: """
                 # Code examples
 

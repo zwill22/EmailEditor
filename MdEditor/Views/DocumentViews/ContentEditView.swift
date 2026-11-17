@@ -25,5 +25,7 @@ struct ContentEditView: View {
 }
 
 #Preview {
-    ContentEditView(content: .constant(Document.codeSample.content))
+    ContentEditView(
+        content: .constant(MarkdownDocument.codeSample.content),
+    )
 }

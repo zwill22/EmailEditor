@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct ListView: View {
-    var documents: [Document]
+    var documents: [MarkdownDocument]
 
-    @Binding var selection: Document?
+    @Binding var selection: MarkdownDocument?
     private var pathItems: some View {
         List(documents, id: \.self, selection: $selection) { document in
             ListItem(document: document)
@@ -44,7 +44,7 @@ struct ListView: View {
 }
 
 #Preview {
-    ListView(documents: Document.sampleData, selection: .constant(nil))
+    ListView(documents: MarkdownDocument.sampleData, selection: .constant(nil))
 }
 
 #Preview("No documents") {

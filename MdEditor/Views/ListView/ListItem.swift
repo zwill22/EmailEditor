@@ -9,7 +9,7 @@ import MarkdownView
 import SwiftUI
 
 struct ListItem: View {
-    @State var document: Document
+    @State var document: MarkdownDocument
 
     var body: some View {
         HStack {

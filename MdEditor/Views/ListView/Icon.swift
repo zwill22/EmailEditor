@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct Icon: View {
-    @Binding var document: Document
+    @Binding var document: MarkdownDocument
 
     var height: CGFloat = 60
 
@@ -47,7 +47,7 @@ struct Icon: View {
 }
 
 #Preview {
-    ForEach(Document.sampleData) { sample in
+    ForEach(MarkdownDocument.sampleData) { sample in
         Icon(document: .constant(sample))
     }
 }

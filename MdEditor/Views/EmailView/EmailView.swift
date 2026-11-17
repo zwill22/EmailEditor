@@ -16,7 +16,7 @@ struct EmailView: View {
 
     @State private var selectedAccount: PersistentIdentifier? = nil
 
-    @State var document: Document
+    @State var document: MarkdownDocument
 
     @State var title = ""
     @State var preview = ""

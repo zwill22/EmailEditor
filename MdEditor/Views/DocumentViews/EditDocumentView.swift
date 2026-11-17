@@ -9,7 +9,7 @@ import SwiftData
 import SwiftUI
 
 struct EditDocumentView: View {
-    var document: Document
+    var document: MarkdownDocument
 
     @Binding var editing: Bool
 

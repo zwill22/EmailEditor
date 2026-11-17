@@ -19,7 +19,7 @@ class DataContainer {
 
     init(includeSample: Bool = false) {
         let schema = Schema([
-            Document.self,
+            MarkdownDocument.self,
             EmailCredentials.self
         ])
 
@@ -45,7 +45,7 @@ class DataContainer {
     }
 
     private func loadSamples() {
-        for message in Document.sampleData {
+        for message in MarkdownDocument.sampleData {
             context.insert(message)
         }
         

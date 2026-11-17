@@ -25,5 +25,5 @@ struct Editor: View {
 }
 
 #Preview {
-    Editor(content: .constant(Document.sample.content))
+    Editor(content: .constant(MarkdownDocument.sample.content))
 }

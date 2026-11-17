@@ -13,7 +13,7 @@ struct DocumentDetailView: View {
     @State private var showConfirmation = false
     @State private var showSendMenu = false
 
-    var document: Document
+    var document: MarkdownDocument
     @Binding var showSidebar: Bool
 
     @Environment(\.dismiss) private var dismiss

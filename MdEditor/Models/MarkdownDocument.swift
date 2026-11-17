@@ -1,5 +1,5 @@
 //
-//  Document.swift
+//  MarkdownDocument.swift
 //  MdEditor
 //
 //  Created by Zack Williams on 21-10-2026.
@@ -20,9 +20,11 @@ where StringType: StringProtocol {
 }
 
 @Model
-class Document {
+class MarkdownDocument {
     var content: String
     var timestamp: Date
+    
+    var location: URL?
 
     var addresses: [Address]
     var subject: String
@@ -72,11 +74,12 @@ class Document {
         return preview
     }
     
-    func fill(with other: Document) {
+    func fill(with other: MarkdownDocument) {
         self.content = other.content
         self.addresses = other.addresses
         self.subject = other.subject
         self.timestamp = other.timestamp
+        self.location = other.location
     }
 
     init(
@@ -91,5 +94,6 @@ class Document {
         })
         self.subject = subject
         self.timestamp = timestamp
+        self.location = nil
     }
 }

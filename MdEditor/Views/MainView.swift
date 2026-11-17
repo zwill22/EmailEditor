@@ -9,11 +9,11 @@ import SwiftData
 import SwiftUI
 
 struct MainView: View {
-    @Query(sort: \Document.timestamp, order: .reverse)
+    @Query(sort: \MarkdownDocument.timestamp, order: .reverse)
 
-    private var documents: [Document]
+    private var documents: [MarkdownDocument]
 
-    @State private var selection: Document? = nil
+    @State private var selection: MarkdownDocument? = nil
     
     @State private var showSidebar = true
     @State private var showNewDocumentView = false

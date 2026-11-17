@@ -11,7 +11,7 @@ import SwiftUI
 struct NewDocumentView: View {
     @Binding var showing: Bool
     
-    @State private var newDocument = Document.init()
+    @State private var newDocument: MarkdownDocument = .init()
     @State private var showCancelConfirmation = false
 
     @Environment(DataContainer.self) private var dataContainer

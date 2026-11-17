@@ -57,18 +57,18 @@ struct DocumentContentView: View {
 
 #Preview {
     DocumentContentView(
-        content: Document.sample.content
+        content: MarkdownDocument.sample.content
     )
 }
 
 #Preview("Code Preview") {
     DocumentContentView(
-        content: Document.codeSample.content
+        content: MarkdownDocument.codeSample.content
     )
 }
 
 #Preview("Quote Preview") {
     DocumentContentView(
-        content: Document.sampleData[4].content
+        content: MarkdownDocument.sampleData[4].content
     )
 }
