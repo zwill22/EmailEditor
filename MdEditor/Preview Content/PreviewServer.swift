@@ -19,15 +19,13 @@ class PreviewServer: MailServer {
         try await wait()
 
         if !validServer {
-            throw ServerError.unableToConnect(
-                error: "Cannot find server" as! Error
-            )
+            throw EditorError.serverConnectionError(server: "Server", port: 123)
         }
 
         try await wait()
 
         if !validUser {
-            throw ServerError.loginError(error: "Invalid credentials" as! Error)
+            throw EditorError.serverLoginError(name: "Server")
         }
 
     }
@@ -36,7 +34,8 @@ class PreviewServer: MailServer {
         try await connect()
     }
 
-    func send(credentials: EmailCredentials, emailDetails: EmailDetails) async throws
+    func send(credentials: EmailCredentials, emailDetails: EmailDetails)
+        async throws
     {
         try await connect()
     }
@@ -51,11 +50,11 @@ extension PreviewServer {
     static var valid: MailServer {
         PreviewServer(validServer: true, validUser: true)
     }
-    
-    static var invalidUser :MailServer {
+
+    static var invalidUser: MailServer {
         PreviewServer(validServer: true, validUser: false)
     }
-    
+
     static var invalidServer: MailServer {
         PreviewServer(validServer: false, validUser: false)
     }

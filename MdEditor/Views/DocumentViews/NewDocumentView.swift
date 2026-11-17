@@ -8,17 +8,6 @@
 import SwiftData
 import SwiftUI
 
-@Observable
-class ErrorHandler {
-    var error: EditorError?
-    var hasError = false
-
-    func handle(_ err: any Error) {
-        self.error = err as? EditorError ?? .unexpectedError(error: err)
-        self.hasError = true
-    }
-}
-
 struct NewDocumentView: View {
     @Binding var showing: Bool
 

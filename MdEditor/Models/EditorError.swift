@@ -8,50 +8,37 @@
 import Foundation
 
 enum EditorError: Error {
-    case fileEncodingError
+    case fileEncodingError(filename: String)
     case fileReadError(filename: String)
-    case fileWriteError(error: Error)
-    case invalidFilename
-    case invalidEmailAccount(name: String)
-    case invalidTemplateKey(key: String)
-    case missingTemplateKey(key: String)
-    case noFileLocation
+    case fileWriteError(filename: String)
+    case serverConnectionError(server: String, port: Int)
+    case serverLoginError(name: String)
     case unexpectedError(error: Error)
 }
 
 extension EditorError: LocalisedError {
     var errorDescription: String? {
         switch self {
-        case .fileEncodingError:
+        case .fileEncodingError(let filename):
             return localisedString(
-                "Unable to decode file data with UTF-8 encoding"
+                "Invalid encoding for file, unable to decode: \(filename)"
             )
         case .fileReadError(let filename):
             return localisedString(
-                "Unable to read file \(filename)"
+                "Error reading file: \(filename)"
             )
-        case .fileWriteError(let error):
+        case .fileWriteError(let filename):
             return localisedString(
-                "Unable to write file: \(error.localisedDescription)"
+                "Error writing to file: \(filename)"
             )
-        case .invalidFilename:
+        case .serverConnectionError(let server, let port):
             return localisedString(
-                "Invalid filename provided"
+                "Unable to connect with email server: \(server):\(port)"
             )
-        case .invalidEmailAccount(let name):
+        case .serverLoginError(let name):
             return localisedString(
-                "Invalid configuration for account: \(name)"
+                "Unable to login to server \(name), please check your credentials"
             )
-        case .invalidTemplateKey(let key):
-            return localisedString(
-                "Invalid template key: \(key)"
-            )
-        case .missingTemplateKey(let key):
-            return localisedString(
-                "No information provided for template key: \(key)"
-            )
-        case .noFileLocation:
-            return localisedString("No file location specified")
         case .unexpectedError(let error):
             return localisedString(
                 "Received unexpected error: \(error.localisedDescription)"

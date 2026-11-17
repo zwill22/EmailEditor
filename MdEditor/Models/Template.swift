@@ -24,7 +24,7 @@ class Template {
 
         for (k, v) in values {
             if !variables.contains(k) {
-                throw EditorError.invalidTemplateKey(key: k)
+                fatalError("Invalid template key: \(k)")
             }
 
             keys.insert(k)
@@ -34,7 +34,7 @@ class Template {
 
         for k in variables {
             if !keys.contains(k) {
-                throw EditorError.missingTemplateKey(key: k)
+                fatalError("Missing template key: \(k)")
             }
         }
 
@@ -48,17 +48,19 @@ class Template {
 
         let filename = url.lastPathComponent
         if filename.isEmpty {
-            throw EditorError.invalidFilename
+            fatalError("Filename is empty")
         }
 
         self.name = String(filename.split(separator: ".")[0]).capitalized(
             with: .current
         )
 
-        let data = try Data(contentsOf: url)
+        guard let data = try? Data(contentsOf: url) else {
+            throw EditorError.fileReadError(filename: url.path())
+        }
 
         guard let contentStr = String(data: data, encoding: .utf8) else {
-            throw EditorError.fileEncodingError
+            throw EditorError.fileEncodingError(filename: url.path())
         }
 
         self.contents = contentStr

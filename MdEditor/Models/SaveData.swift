@@ -10,13 +10,13 @@ import Foundation
 extension MarkdownDocument {
     func save() throws {
         guard let fileUrl = location else {
-            throw EditorError.noFileLocation
+            fatalError("Attempting to save file without a specified location")
         }
 
         do {
             try content.write(to: fileUrl, atomically: true, encoding: .utf8)
         } catch {
-            throw EditorError.fileWriteError(error: error)
+            throw EditorError.fileWriteError(filename: fileUrl.path())
         }
     }
 }

@@ -29,7 +29,10 @@ class EMailServer: MailServer {
         do {
             try await server.connect()
         } catch {
-            throw ServerError.unableToConnect(error: error)
+            throw EditorError.serverConnectionError(
+                server: credentials.host,
+                port: credentials.port
+            )
         }
 
         do {
@@ -38,7 +41,7 @@ class EMailServer: MailServer {
                 password: credentials.password
             )
         } catch {
-            throw ServerError.loginError(error: error)
+            throw EditorError.serverLoginError(name: credentials.name)
         }
 
         return server
@@ -51,7 +54,8 @@ class EMailServer: MailServer {
         try await server.disconnect()
     }
 
-    func send(credentials: EmailCredentials, emailDetails: EmailDetails) async throws
+    func send(credentials: EmailCredentials, emailDetails: EmailDetails)
+        async throws
     {
         let server = try await connect(credentials: credentials)
 

@@ -87,11 +87,11 @@ struct EmailView: View {
 
     func buildEmail() throws -> String {
         guard let selection = selectedTemplate else {
-            throw EditorError.invalidTemplateKey(key: "")
+            fatalError("Invalid template")
         }
 
         guard let template = provider.get(name: selection) else {
-            throw EditorError.missingTemplateKey(key: selection)
+            fatalError("Unable to get template from provider")
         }
 
         return try template.fill(values: [
